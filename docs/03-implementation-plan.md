@@ -127,7 +127,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A4-04 | `photon.py` search + reverse → "City, ST" | `test_photon.py` (respx) | ✅ |
 | A4-05 | `fake.py` full scenario fixtures SC-1…SC-7 (SC-6 raises) + straight-line fallback | `test_fake_provider.py` | ✅ |
 | A4-06 | `timezone.py` | `test_timezone.py` | ✅ |
-| A4-07 | Mongo caches with TTL + `ensure_indexes` command | `test_cache.py` | ⬜ |
+| A4-07 | Mongo caches with TTL + `ensure_indexes` command | `test_cache.py` | ✅ |
 
 **Gate:** `pytest tests/unit/geo` green; no real network (respx `assert_all_mocked`).
 
