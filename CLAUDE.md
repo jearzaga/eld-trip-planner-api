@@ -80,7 +80,7 @@ eld-trip-planner-api/
 │  ├─ acceptance/              # SC-1…SC-7 over HTTP (outer loop for this repo)
 │  └─ fixtures/responses/      # generated contract fixtures (sc1.json … sc7.json) consumed by the web repo
 ├─ docs/
-└─ .github/workflows/ci.yml
+└─ .github/workflows/ci.yml   # ⏭️ deferred, not in the repo yet
 ```
 
 ## Commands

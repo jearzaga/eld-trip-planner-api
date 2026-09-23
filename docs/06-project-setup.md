@@ -451,6 +451,8 @@ htmlcov/
 .hypothesis/
 ```
 
+> ⏭️ CI is deferred (2026-09-23) and this file is not in the repo; see `03-implementation-plan.md` *Decision log*.
+
 **`.github/workflows/ci.yml`** (minimal; extended in A5 with contract drift checks). Add the Atlas URI as a repository
 secret first: GitHub → *Settings → Secrets and variables → Actions* → `MONGODB_URI`.
 
