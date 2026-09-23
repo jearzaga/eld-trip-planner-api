@@ -30,3 +30,17 @@ def test_inspections_off_skips_pretrip_and_posttrip_segments():
     assert all("inspection" not in (s.note or "").lower() for s in timeline.segments)
     assert timeline.segments[0].status == DutyStatus.D
     assert timeline.segments[0].start_min == 0
+
+
+# A-08
+def test_leg_driving_time_rounds_up_to_next_quarter_hour():
+    timeline = plan_timeline(TripInput(legs=(Leg(100, 110), Leg(0, 0)), cycle_used_min=0))
+    first_drive = next(s for s in timeline.segments if s.status == DutyStatus.D)
+    assert first_drive.duration_min == 120
+
+
+def test_leg_with_duration_but_no_distance_drives_without_fuel_stops():
+    timeline = plan_timeline(TripInput(legs=(Leg(0, 20), Leg(0, 0)), cycle_used_min=0))
+    driving = [s for s in timeline.segments if s.status == DutyStatus.D]
+    assert [s.duration_min for s in driving] == [30]
+    assert not any(stop.type == StopType.FUEL for stop in timeline.stops)

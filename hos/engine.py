@@ -125,9 +125,10 @@ def _drive_leg(s: _State, leg: Leg) -> None:
     while remaining > 0:
         s.start_shift_if_needed()
         fuel_miles_left = max(0.0, FUEL_INTERVAL_MI - s.miles_since_fuel)
+        minutes_to_fuel = _minutes_for(fuel_miles_left, leg.mph) if leg.mph else remaining
         limits = {
             "leg": remaining,
-            "fuel": floor_q(_minutes_for(fuel_miles_left, leg.mph)),  # R-06, A-09
+            "fuel": floor_q(minutes_to_fuel),  # R-06, A-09
             "break": DRIVING_BEFORE_BREAK_MIN - s.drive_since_break,  # R-03
             "11": MAX_DRIVING_MIN - s.drive_in_shift,  # R-01
             "14": SHIFT_WINDOW_MIN - s.minutes_since_shift_start(),  # R-02
