@@ -106,7 +106,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 |---|---|---|---|
 | A3-01 | Trip minutes → aware datetimes in home tz; pad OFF to local midnights | `test_log_builder_padding.py` | ✅ |
 | A3-02 | Split at local midnight (rest crossing midnight) | `test_log_builder_split.py` | ✅ |
-| A3-03 | Totals per status; sum 24 | `test_totals_*` | ⬜ |
+| A3-03 | Totals per status; sum 24 | `test_log_builder_totals.py` | ✅ |
 | A3-04 | **Golden** John Doe: totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks | `test_john_doe_example_log_matches_totals_and_remarks` | ⬜ |
 | A3-05 | Remarks at every status change (R-09) | `test_remarks_*` | ⬜ |
 | A3-06 | Header fields (R-11) | `test_header_*` | ⬜ |
