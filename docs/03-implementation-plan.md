@@ -20,12 +20,25 @@ W0 ─┘         A1 ────────┘                      │       
 
 W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot the backend.
 
+## What's left (next up)
+
+_Updated 2026-09-23 after A1 (acceptance tests, skipped) was written._
+
+1. **A1 ✅.** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`); the AC-34 John Doe
+   golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
+2. **W0 → W1 in the web repo.** W0-02 (project setup) is in progress. W1 (Playwright harness + `fixme` specs) is unblocked
+   on the API side: health endpoint and fake provider are done.
+3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). Blocked until **W1 and A1 are ✅**.
+4. **Blocked A0 tasks** (see *Blockers*): A0-07 CI and A0-08 Render. A0 stays 🟨 until both are done, but that doesn't
+   hold up A1, W1 or feature work.
+5. **A10, A11** at the end (production deploy, README / Loom).
+
 ## Progress overview (API)
 
 | Phase | Name | Est. | Status | Gate |
 |---|---|---|---|---|
 | A0 | Repo & tooling foundation | 0.5 d | 🟨 | Health endpoint green locally, on Render, in CI |
-| A1 | Acceptance tests (pytest, skipped) | 0.25 d | ⬜ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
+| A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
 | A2 | HOS engine (pure Python) | 1 d | ⬜ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
@@ -39,28 +52,27 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A0-01 | Create GitHub repo `eld-trip-planner-api` (public); `.gitignore`, `.editorconfig`, `README.md`, `CLAUDE.md`, `docs/` | — | ⬜ |
+| A0-01 | Create GitHub repo `eld-trip-planner-api` (public); `.gitignore`, `.editorconfig`, `README.md`, `CLAUDE.md`, `docs/` | — | ✅ |
 | A0-02 | MongoDB Atlas M0 cluster + DB user + network access `0.0.0.0/0`; `MONGODB_URI` in `.env` (no local MongoDB / Docker) | Atlas ping via `manage.py shell` (`06-project-setup.md` §6) | ✅ |
 | A0-03 | Per `06-project-setup.md`: venv (`uv init`); deps: Django 5.2, DRF, `django-mongodb-backend>=5.2.1,<5.3`, django-cors-headers, httpx, timezonefinder, python-dotenv, gunicorn, drf-spectacular; dev: pytest, pytest-django, pytest-cov, hypothesis, respx, ruff. Env-driven `config/settings.py`; packages `hos`, `geo`, app `trips` | `uv run pytest` collects without error | ✅ |
 | A0-04 | `GET /api/health/` (pings Mongo) | `tests/api/test_health.py` | ✅ |
 | A0-05 | `GEO_PROVIDER` factory with a stub `FakeGeoProvider` (straight-line route); `MONGODB_DB` override for test/E2E | `tests/unit/geo/test_provider_factory.py` | ✅ |
 | A0-06 | CORS from env (`CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES`) | `tests/api/test_cors.py` (localhost:5173 allowed, other origin not) | ✅ |
-| A0-07 | CI: ruff + pytest against Atlas (`MONGODB_URI` repo secret, `MONGODB_DB=eld_ci`); `requirements.txt` export + drift check | push → green | ⬜ |
-| A0-08 | `render.yaml` (reuses the A0-02 Atlas cluster); first Render deploy of health endpoint (`GEO_PROVIDER=fake` for now) | `curl https://<api>.onrender.com/api/health/` → ok | ⬜ |
+| A0-07 | CI: ruff + pytest against Atlas (`MONGODB_URI` repo secret, `MONGODB_DB=eld_ci`); `requirements.txt` export + drift check | push → green | ⛔ |
+| A0-08 | `render.yaml` (reuses the A0-02 Atlas cluster); first Render deploy of health endpoint (`GEO_PROVIDER=fake` for now) | `curl https://<api>.onrender.com/api/health/` → ok | ⛔ |
 
 **Gate:** health green locally, in CI and on Render. → unblocks **W1**.
 
-> A0-07 (CI) and A0-08 (Render) are on hold: A0-07 needs the `MONGODB_URI` GitHub Actions secret (the workflow file
-> already exists), and A0-08 waits for a Render account. W1 only needs A0-04 + A0-05 (health + fake provider) locally,
-> so it can start now. Before deploying, decide on `render.yaml`'s `ensure_indexes` build step (the command doesn't exist yet).
+> A0-07 and A0-08 are ⛔ (see *Blockers* #1–#3). W1 only needs A0-04 + A0-05 (health + fake provider) locally, so it
+> can start now.
 
 ## A1 — Acceptance tests (outer loop, written up front)
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A1-01 | `tests/conftest.py`: `api_client`, `scenario(id)` fixture loader | — | ⬜ |
-| A1-02 | `tests/acceptance/test_scenarios.py`: SC-1…SC-7 + AC-30…AC-35 assertions, each `@pytest.mark.skip(reason="enable in A5")` | `pytest tests/acceptance` → all collected, all skipped | ⬜ |
-| A1-03 | Scenario inputs + expectations file `tests/fixtures/scenarios.py` (from `04-testing-strategy.md` §3) | — | ⬜ |
+| A1-01 | `tests/conftest.py`: `api_client`, `scenario(id)` fixture loader | — | ✅ |
+| A1-02 | `tests/acceptance/test_scenarios.py`: SC-1…SC-7 + AC-30…AC-35 assertions, each `@pytest.mark.skip(reason="enable in A5-01")`; AC-34 placeholder in `tests/unit/hos/test_log_builder_golden.py` (skip until A3-04) | `pytest tests/acceptance` → all collected, all skipped | ✅ |
+| A1-03 | Scenario inputs + expectations file `tests/fixtures/scenarios.py` (from `04-testing-strategy.md` §3) | — | ✅ |
 
 **Gate:** acceptance suite collected (skipped). Together with W1 ✅ → feature work may start.
 
@@ -161,9 +173,12 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | 2026-09-23 | Contract shared via committed `openapi.yaml` + response fixtures | 02 §5.1 |
 | 2026-09-23 | 10-h resets logged as SB; inspections 15 min each, default on | A-06, A-07 |
 | 2026-09-23 | Cycle-used treated as non-rolling during trip (conservative) | A-04 |
+| 2026-09-23 | MongoDB Atlas M0 in every environment (dev, tests, E2E, CI, Render); no local MongoDB or Docker. One DB name per environment via `MONGODB_DB` | 06 §6 |
 
 ## Blockers / open questions
 
 | # | Question | Status |
 |---|---|---|
-| 1 | — | — |
+| 1 | A0-07: add the `MONGODB_URI` GitHub Actions secret to this repo, then push to get the first green CI run (`.github/workflows/ci.yml` already exists) | ⛔ waiting on secret |
+| 2 | A0-08: create a Render account, then add `render.yaml` and deploy the health endpoint | ⛔ waiting on account |
+| 3 | `render.yaml` in `02-architecture.md` §7 runs `manage.py ensure_indexes`, which A4-07 creates. For A0-08, drop that build step until A4-07, or add a no-op command now? | open |
