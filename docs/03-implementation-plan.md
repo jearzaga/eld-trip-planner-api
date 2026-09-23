@@ -92,7 +92,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A2-07 | R-06 + A-09 fuel ≤ 1,000 mi, 30 min ON, rounded down; counts as break | `test_engine_fuel.py` | ✅ |
 | A2-08 | R-04 + A-05 70-h cycle; 34-h restart mid-trip (SC-3) and at start (SC-4) | `test_engine_cycle.py` | ✅ |
 | A2-09 | A-12 tie-break | `test_engine_ties.py` | ✅ |
-| A2-10 | Edge cases: zero-mile leg (SC-7), inspections off | `test_engine_edges.py` | ⬜ |
+| A2-10 | Edge cases: zero-mile leg (SC-7), inspections off | `test_engine_edges.py` | ✅ |
 | A2-11 | **Golden** SC-2 exact segments = business rules §8 | `test_engine_worked_example.py` | ⬜ |
 | A2-12 | **Property tests** (Hypothesis) — invariants from architecture §4.1 | `test_engine_invariants.py` | ⬜ |
 | A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ⬜ |
