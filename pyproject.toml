@@ -1,0 +1,48 @@
+[project]
+name = "eld-trip-planner-api"
+version = "0.1.0"
+description = "ELD Trip Planner API: FMCSA HOS trip planning and daily log generation"
+readme = "README.md"
+authors = [
+    { name = "John Erick Arzaga", email = "johnerickarzaga11@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "django~=5.2.0",
+    "django-cors-headers>=4.9.0",
+    "django-mongodb-backend>=5.2.1,<5.3",
+    "djangorestframework>=3.18.1",
+    "drf-spectacular>=0.30.0",
+    "gunicorn>=26.2.0",
+    "httpx>=0.28.1",
+    "python-dotenv>=1.2.3",
+    "timezonefinder>=9.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.168.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.14.0",
+    "respx>=0.23.1",
+    "ruff>=0.16.8",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q --cov=hos --cov=geo --cov=trips --cov-report=term-missing"
+markers = ["live: hits real external APIs (never run in CI)"]
+
+[tool.coverage.run]
+omit = ["*/migrations/*", "config/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["docs"]  # Markdown snippets are illustrative, not source
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "DJ"]
