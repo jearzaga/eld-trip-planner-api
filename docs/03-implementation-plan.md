@@ -45,7 +45,7 @@ _Updated 2026-09-24 after A4 (geo services) landed._
 | A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ✅ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ✅ | Adapters tested with recorded fixtures; fake serves all scenarios |
-| A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
+| A5 | API, persistence, contract | 0.75 d | 🟨 | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
 | A10 | Production deploy (Render) | 0.25 d | ⬜ | Live provider works on Render; web `@smoke` green |
 | A11 | Deliverables (API) | 0.25 d | ⬜ | README final |
 
