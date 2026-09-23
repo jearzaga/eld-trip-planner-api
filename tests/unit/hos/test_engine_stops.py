@@ -16,7 +16,7 @@ def test_every_stop_carries_a_mile_marker_in_time_order():
 
 
 # SC-5: 2 fuel, 4 x 10-hr reset, 2 x 30-min break
-def test_cross_country_trip_matches_sc5_stop_counts():
+def test_cross_country_trip_matches_expected_stop_counts():
     timeline = plan_timeline(CROSS_COUNTRY_TRIP)
     stop_types = [stop.type for stop in timeline.stops]
     assert stop_types.count(StopType.FUEL) == 2
