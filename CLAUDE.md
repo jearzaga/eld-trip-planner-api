@@ -69,7 +69,7 @@ If code and docs disagree, **stop and ask** — never silently change a business
 
 ```
 eld-trip-planner-api/
-├─ CLAUDE.md · README.md · .env.example · render.yaml · pyproject.toml · uv.lock · requirements.txt · openapi.yaml
+├─ CLAUDE.md · README.md · .env.example · pyproject.toml · uv.lock · requirements.txt · openapi.yaml
 ├─ config/          # settings (env-driven), urls, wsgi
 ├─ hos/             # PURE PYTHON: models.py (dataclasses), rules.py, engine.py, log_builder.py, time_utils.py
 ├─ geo/             # provider.py, ors.py, photon.py, fake.py, route_math.py, timezone.py, cache.py, fixtures/scenarios/

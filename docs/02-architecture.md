@@ -13,7 +13,7 @@
 | Time zones | `timezonefinder` + `zoneinfo` | Offline home-terminal zone lookup |
 | API schema | **drf-spectacular** → committed `openapi.yaml` | Machine-readable contract the web repo generates TS types from |
 | Tests | pytest, pytest-django, Hypothesis, respx | TDD inner loop + property tests |
-| Hosting | **Render Web Service** (Python runtime, gunicorn) via `render.yaml` Blueprint | Chosen platform; long-running process suits Django + Mongo connection pooling |
+| Hosting | **Render Web Service** (Python runtime, gunicorn), configured in the dashboard | Chosen platform; long-running process suits Django + Mongo connection pooling |
 | CI | GitHub Actions: ruff → pytest (Mongo service) → contract drift check | Render auto-deploys `main` after checks pass |
 
 ## 2. System context
@@ -325,31 +325,16 @@ minimal `INSTALLED_APPS` (no admin/auth); DRF `DEFAULT_AUTHENTICATION_CLASSES = 
 
 ## 7. Deployment — Render
 
-```yaml
-# render.yaml (Blueprint)
-services:
-  - type: web
-    name: eld-trip-planner-api
-    runtime: python
-    plan: free                       # upgrade to starter during grading week if cold starts are a concern
-    region: virginia                 # same region as the Atlas cluster (AWS us-east-1)
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 90
-    healthCheckPath: /api/health/
-    envVars:
-      - { key: PYTHON_VERSION, value: "3.12.7" }
-      - { key: DJANGO_SECRET_KEY, generateValue: true }
-      - { key: DJANGO_DEBUG, value: "0" }
-      - { key: ALLOWED_HOSTS, value: ".onrender.com" }
-      - { key: GEO_PROVIDER, value: fake }   # switch to live in A10
-      - { key: MONGODB_URI, sync: false }
-      - { key: MONGODB_DB, value: eld }
-      - { key: ORS_API_KEY, sync: false }
-      - { key: CORS_ALLOWED_ORIGINS, sync: false }          # https://<app>.vercel.app
-      - { key: CORS_ALLOWED_ORIGIN_REGEXES, sync: false }   # ^https://eld-trip-planner-web-.*\.vercel\.app$ (previews)
-```
+The service is configured in the Render dashboard (no `render.yaml` Blueprint; see `03-implementation-plan.md` *Decision log*).
+Render builds and deploys on every push to `main`.
 
-A4-07 adds `python manage.py ensure_indexes` back into `buildCommand` once that command exists.
+| Setting | Value |
+|---|---|
+| Service | `eld-trip-planner-api` · Python · free plan · https://eld-trip-planner-api-ozav.onrender.com |
+| Build command | `pip install -r requirements.txt` (A4-07 appends `&& python manage.py ensure_indexes`) |
+| Start command | `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 90` |
+| Health check path | `/api/health/` |
+| Env vars | `PYTHON_VERSION=3.12.7`, `DJANGO_SECRET_KEY` (random), `DJANGO_DEBUG=0`, `ALLOWED_HOSTS=.onrender.com`, `GEO_PROVIDER=fake` (→ `live` in A10), `MONGODB_URI` (secret), `MONGODB_DB=eld`, `ORS_API_KEY` (A10), `CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES` (§8) |
 
 - `requirements.txt` is exported from `uv.lock` (`uv export --no-dev --no-hashes`); CI fails if it drifts.
 - `gunicorn` is a runtime dependency. No static files (API only), so no WhiteNoise needed.
