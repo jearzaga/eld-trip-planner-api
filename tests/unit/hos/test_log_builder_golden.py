@@ -17,10 +17,11 @@ JOHN_DOE_SEGMENTS = [
 ]
 
 
+# AC-34
 @pytest.mark.skip(reason="enable in A3-04")
-def test_ac34_john_doe_golden():
+def test_john_doe_example_log_matches_totals_and_remarks():
     from hos.log_builder import build_daily_logs
 
-    (day,) = build_daily_logs(JOHN_DOE_SEGMENTS)
-    assert day.totals == {"OFF": 10.0, "SB": 1.75, "D": 7.75, "ON": 4.5}
-    assert len(day.remarks) == 6
+    (daily_log,) = build_daily_logs(JOHN_DOE_SEGMENTS)
+    assert daily_log.totals == {"OFF": 10.0, "SB": 1.75, "D": 7.75, "ON": 4.5}
+    assert len(daily_log.remarks) == 6

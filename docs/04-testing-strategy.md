@@ -54,17 +54,16 @@ testing works without keys).
 scenario and per HOS criterion (AC-30…AC-35). Enabling = deleting the skip marker → red.
 
 ```python
+# SC-2 · AC-33
 @pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
-def test_sc2_matches_worked_example(api_client, scenario):
-    res = api_client.post("/api/trips/", scenario("SC-2").request, format="json")
-    assert res.status_code == 201
-    days = res.json()["daily_logs"]
-    assert [d["totals"] for d in days] == [
+def test_two_day_trip_matches_business_rules_worked_example(api_client):
+    trip_plan = plan_trip(api_client, TWO_DAY_WORKED_EXAMPLE_TRIP)
+    assert daily_totals(trip_plan) == [
         {"OFF": 6.5, "SB": 5.25, "D": 11.0, "ON": 1.25},
         {"OFF": 8.5, "SB": 4.75, "D": 9.0,  "ON": 1.75},
     ]
-    assert [s["type"] for s in res.json()["stops"]] == ["pickup", "break_30", "rest_10", "fuel", "dropoff"]
+    assert stop_types_in_order(trip_plan) == ["pickup", "break_30", "rest_10", "fuel", "dropoff"]
 ```
 
 A2–A4 (pure engine / builder / geo) use the **golden unit tests** as their outer loop, because the HTTP path doesn't exist yet.
@@ -72,8 +71,10 @@ A2–A4 (pure engine / builder / geo) use the **golden unit tests** as their out
 ## 5. Unit-test conventions
 
 - **Table-driven:** legs + cycle → expected `(status, start, end)` list or expected stop types.
-- **Rule-named:** `test_r02_on_duty_allowed_after_14th_hour`, `test_a12_fuel_then_rest_on_tie`.
-- **Goldens:** `test_worked_example_sc2` (exact segments), `test_john_doe_golden` (totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks).
+- **Behavior-named, ID-cited:** the name says what the test proves; the spec ID goes in a comment above it, never in
+  the name — `# R-02` over `def test_on_duty_allowed_after_14th_hour`, `# A-12` over `def test_fuel_then_rest_on_tie`.
+- **Goldens:** `test_two_day_worked_example_segments` (exact segments), `test_john_doe_example_log_matches_totals_and_remarks`
+  (totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks).
 - **Property tests (Hypothesis):** random legs (0–3,000 mi, 40–65 mph) × cycle (0–70, step 0.25) × start time →
   every invariant in `02-architecture.md` §4.1 holds and every day totals 24.
 - **Purity:** `test_purity.py` parses `hos/*.py` imports and fails on anything outside the standard library.

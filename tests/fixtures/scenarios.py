@@ -16,11 +16,12 @@ HOME_TIMEZONE = "America/New_York"
 
 @dataclass(frozen=True)
 class Scenario:
+    spec_id: str
     request: dict
     expected: dict
 
 
-def _request(current, pickup, dropoff, cycle_used_hrs):
+def trip_request(current, pickup, dropoff, cycle_used_hrs):
     return {
         "current": current,
         "pickup": pickup,
@@ -31,50 +32,68 @@ def _request(current, pickup, dropoff, cycle_used_hrs):
     }
 
 
-SCENARIOS = {
-    "SC-1": Scenario(
-        _request(RICHMOND, FREDERICKSBURG, PHILADELPHIA, 0),
-        {
-            "log_days": 1,
-            "totals": [{"OFF": 17.5, "SB": 0.0, "D": 4.0, "ON": 2.5}],
-            "stop_types": ["pickup", "dropoff"],
-        },
-    ),
-    "SC-2": Scenario(
-        _request(RICHMOND, BALTIMORE, KANSAS_CITY, 20),
-        {
-            "log_days": 2,
-            "totals": [
-                {"OFF": 6.5, "SB": 5.25, "D": 11.0, "ON": 1.25},
-                {"OFF": 8.5, "SB": 4.75, "D": 9.0, "ON": 1.75},
-            ],
-            "stop_types": ["pickup", "break_30", "rest_10", "fuel", "dropoff"],
-        },
-    ),
-    "SC-3": Scenario(
-        _request(RICHMOND, BALTIMORE, KANSAS_CITY, 65),
-        {"log_days": 4, "restart_34": 1},
-    ),
-    "SC-4": Scenario(
-        _request(RICHMOND, FREDERICKSBURG, PHILADELPHIA, 70),
-        {
-            "log_days": 2,
-            "day_1_totals": {"OFF": 24.0, "SB": 0.0, "D": 0.0, "ON": 0.0},
-            "first_stop": "restart_34",
-        },
-    ),
-    "SC-5": Scenario(
-        _request(RICHMOND, CHARLOTTE, LOS_ANGELES, 10),
-        {"log_days": 5, "fuel": 2, "rest_10": 4, "break_30": 2},
-    ),
-    "SC-6": Scenario(
-        _request(RICHMOND, HONOLULU, ANCHORAGE, 0),
-        {"status": 422, "error_code": "ROUTE_NOT_FOUND"},
-    ),
-    "SC-7": Scenario(
-        _request(RICHMOND, RICHMOND, PHILADELPHIA, 0),
-        {"log_days": 1, "pickup_arrive_at": "2026-09-24T06:15:00-04:00"},
-    ),
-}
+SHORT_DAY_TRIP = Scenario(
+    "SC-1",
+    trip_request(RICHMOND, FREDERICKSBURG, PHILADELPHIA, 0),
+    {
+        "log_days": 1,
+        "totals": [{"OFF": 17.5, "SB": 0.0, "D": 4.0, "ON": 2.5}],
+        "stop_types": ["pickup", "dropoff"],
+    },
+)
 
-ROUTABLE = [sc for sc in SCENARIOS if sc != "SC-6"]
+TWO_DAY_WORKED_EXAMPLE_TRIP = Scenario(
+    "SC-2",
+    trip_request(RICHMOND, BALTIMORE, KANSAS_CITY, 20),
+    {
+        "log_days": 2,
+        "totals": [
+            {"OFF": 6.5, "SB": 5.25, "D": 11.0, "ON": 1.25},
+            {"OFF": 8.5, "SB": 4.75, "D": 9.0, "ON": 1.75},
+        ],
+        "stop_types": ["pickup", "break_30", "rest_10", "fuel", "dropoff"],
+    },
+)
+
+CYCLE_LIMITED_TRIP = Scenario(
+    "SC-3",
+    trip_request(RICHMOND, BALTIMORE, KANSAS_CITY, 65),
+    {"log_days": 4, "restart_34": 1},
+)
+
+CYCLE_FULL_TRIP = Scenario(
+    "SC-4",
+    trip_request(RICHMOND, FREDERICKSBURG, PHILADELPHIA, 70),
+    {
+        "log_days": 2,
+        "day_1_totals": {"OFF": 24.0, "SB": 0.0, "D": 0.0, "ON": 0.0},
+        "first_stop": "restart_34",
+    },
+)
+
+CROSS_COUNTRY_TRIP = Scenario(
+    "SC-5",
+    trip_request(RICHMOND, CHARLOTTE, LOS_ANGELES, 10),
+    {"log_days": 5, "fuel": 2, "rest_10": 4, "break_30": 2},
+)
+
+UNROUTABLE_TRIP = Scenario(
+    "SC-6",
+    trip_request(RICHMOND, HONOLULU, ANCHORAGE, 0),
+    {"status": 422, "error_code": "ROUTE_NOT_FOUND"},
+)
+
+PICKUP_AT_CURRENT_LOCATION_TRIP = Scenario(
+    "SC-7",
+    trip_request(RICHMOND, RICHMOND, PHILADELPHIA, 0),
+    {"log_days": 1, "pickup_arrive_at": "2026-09-24T06:15:00-04:00"},
+)
+
+ROUTABLE_SCENARIOS = [
+    SHORT_DAY_TRIP,
+    TWO_DAY_WORKED_EXAMPLE_TRIP,
+    CYCLE_LIMITED_TRIP,
+    CYCLE_FULL_TRIP,
+    CROSS_COUNTRY_TRIP,
+    PICKUP_AT_CURRENT_LOCATION_TRIP,
+]

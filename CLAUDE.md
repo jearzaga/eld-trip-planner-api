@@ -102,7 +102,11 @@ uv export --no-dev --no-hashes -o requirements.txt # after changing deps (Render
 - Python 3.12, type hints, `ruff`. Frozen dataclasses in `hos/`.
 - Names follow the glossary: `DutyStatus.OFF | SB | D | ON`, `Segment`, `Stop`, `DailyLog`, `Recap`.
 - Rule constants live in `hos/rules.py` and cite rule IDs: `MAX_DRIVING_MIN = 11 * 60  # R-01`.
-- Test names cite rules: `test_r03_break_after_8h_cumulative_driving`.
+- **Descriptive names, never spec IDs.** Functions, tests, variables and constants say what they are or prove, so a new
+  dev can read them without the docs open: `test_break_required_after_8_hours_of_driving`, `TWO_DAY_WORKED_EXAMPLE_TRIP`,
+  `trip_plan`, `driving_since_break_min` — not `test_r03_…`, `test_sc2_ac33_…`, `sc2`, `res`, `d`. Cite the ID in a comment
+  above the test instead (`# R-03`, `# SC-2 · AC-33`); IDs may also appear in strings and data (`spec_id="SC-2"`,
+  assert messages). Single-letter names only for trivial comprehensions.
 - Conventional commits with task IDs: `test(hos): A2-04 failing test for 30-min break` → `feat(hos): A2-04 …`.
 
 ## Task script (follow for every task)
