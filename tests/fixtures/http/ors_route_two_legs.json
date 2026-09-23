@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "segments": [
+          {"distance": 207500.6, "duration": 9120.4},
+          {"distance": 1689811.2, "duration": 57600.0}
+        ],
+        "way_points": [0, 3, 6],
+        "summary": {"distance": 1897311.8, "duration": 66720.4}
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.4360, 37.5407],
+          [-77.2000, 37.8000],
+          [-76.9000, 38.6000],
+          [-76.6122, 39.2904],
+          [-80.0000, 39.2000],
+          [-87.0000, 39.1500],
+          [-94.5786, 39.0997]
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "query": {"coordinates": [[-77.4360, 37.5407], [-76.6122, 39.2904], [-94.5786, 39.0997]]}
+  }
+}

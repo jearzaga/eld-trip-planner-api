@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 445566,
+        "countrycode": "CA",
+        "name": "Windsor",
+        "city": "Windsor",
+        "state": "Ontario",
+        "country": "Canada",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-83.0458, 42.3149]}
+    }
+  ]
+}
