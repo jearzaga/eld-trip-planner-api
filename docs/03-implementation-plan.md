@@ -42,7 +42,7 @@ _Updated 2026-09-24 after A2 (HOS engine) and A3 (log builder) landed._
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
 | A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ✅ | John Doe golden + SC-1…SC-5 logs total 24 |
-| A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
+| A4 | Geo services | 0.5 d | 🟨 | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
 | A10 | Production deploy (Render) | 0.25 d | ⬜ | Live provider works on Render; web `@smoke` green |
 | A11 | Deliverables (API) | 0.25 d | ⬜ | README final |
@@ -121,7 +121,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A4-01 | `GeoProvider` protocol finalized (`route`, `geocode`, `reverse`) | `test_provider_factory.py` | ⬜ |
+| A4-01 | `GeoProvider` protocol finalized (`route`, `geocode`, `reverse`) | `test_provider_factory.py` | ✅ |
 | A4-02 | `route_math.py`: haversine, cumulative distance, `point_at_mile` | `test_route_math.py` | ⬜ |
 | A4-03 | `ors.py` `driving-hgv` → legs (mi, h) + GeoJSON; errors → `RouteNotFound` / `ProviderUnavailable` | `test_ors.py` (respx) | ⬜ |
 | A4-04 | `photon.py` search + reverse → "City, ST" | `test_photon.py` (respx) | ⬜ |

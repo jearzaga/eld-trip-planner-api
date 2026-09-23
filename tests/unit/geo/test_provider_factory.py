@@ -1,7 +1,7 @@
 import pytest
 
 from geo.fake import FakeGeoProvider
-from geo.provider import get_provider
+from geo.provider import GeoProvider, Place, ProviderUnavailable, RouteNotFound, get_provider
 
 RICHMOND = (37.5407, -77.4360)
 BALTIMORE = (39.2904, -76.6122)
@@ -42,3 +42,18 @@ def test_fake_route_zero_length_leg_when_points_match():
 
     assert leg.distance_mi == 0
     assert leg.duration_h == 0
+
+
+def test_geo_provider_protocol_covers_routing_and_geocoding():
+    assert {"route", "geocode", "reverse"} <= GeoProvider.__protocol_attrs__
+
+
+def test_route_not_found_and_provider_unavailable_are_distinct_errors():
+    assert not issubclass(RouteNotFound, ProviderUnavailable)
+    assert not issubclass(ProviderUnavailable, RouteNotFound)
+
+
+def test_place_carries_label_and_coordinates():
+    place = Place(label="Richmond, VA", lat=37.5407, lng=-77.4360)
+
+    assert (place.label, place.lat, place.lng) == ("Richmond, VA", 37.5407, -77.4360)
