@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 987654,
+        "countrycode": "US",
+        "name": "Shenandoah National Park",
+        "town": "Luray",
+        "state": "Virginia",
+        "country": "United States",
+        "type": "national_park"
+      },
+      "geometry": {"type": "Point", "coordinates": [-78.4680, 38.5307]}
+    }
+  ]
+}

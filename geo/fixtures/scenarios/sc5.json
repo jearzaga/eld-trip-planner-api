@@ -1,0 +1,9 @@
+{
+  "spec_id": "SC-5",
+  "name": "Cross-country",
+  "points": [[37.5407, -77.4360], [35.2271, -80.8431], [34.0522, -118.2437]],
+  "legs": [
+    {"distance_mi": 300, "duration_h": 5},
+    {"distance_mi": 2500, "duration_h": 42}
+  ]
+}

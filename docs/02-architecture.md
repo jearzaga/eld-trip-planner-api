@@ -331,7 +331,7 @@ Render builds and deploys on every push to `main`.
 | Setting | Value |
 |---|---|
 | Service | `eld-trip-planner-api` · Python · free plan · https://eld-trip-planner-api-ozav.onrender.com |
-| Build command | `pip install -r requirements.txt` (A4-07 appends `&& python manage.py ensure_indexes`) |
+| Build command | `pip install -r requirements.txt && python manage.py ensure_indexes` |
 | Start command | `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 90` |
 | Health check path | `/api/health/` |
 | Env vars | `PYTHON_VERSION=3.12.7`, `DJANGO_SECRET_KEY` (random), `DJANGO_DEBUG=0`, `ALLOWED_HOSTS=.onrender.com`, `GEO_PROVIDER=fake` (→ `live` in A10), `MONGODB_URI` (secret), `MONGODB_DB=eld`, `ORS_API_KEY` (A10), `CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES` (§8) |

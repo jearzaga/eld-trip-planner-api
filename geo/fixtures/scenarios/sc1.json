@@ -1,0 +1,9 @@
+{
+  "spec_id": "SC-1",
+  "name": "Short day",
+  "points": [[37.5407, -77.4360], [38.3032, -77.4605], [39.9526, -75.1652]],
+  "legs": [
+    {"distance_mi": 60, "duration_h": 1},
+    {"distance_mi": 180, "duration_h": 3}
+  ]
+}

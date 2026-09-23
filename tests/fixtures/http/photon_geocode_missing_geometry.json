@@ -1,0 +1,30 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 111222,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Virginia",
+        "country": "United States",
+        "type": "city"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 111223,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Indiana",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-84.8902, 39.8289]}
+    }
+  ]
+}

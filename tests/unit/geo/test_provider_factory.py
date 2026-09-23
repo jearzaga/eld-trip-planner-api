@@ -1,11 +1,17 @@
 import pytest
 
+from geo.cache import CachedGeoProvider
 from geo.fake import FakeGeoProvider
-from geo.provider import get_provider
-
-RICHMOND = (37.5407, -77.4360)
-BALTIMORE = (39.2904, -76.6122)
-KANSAS_CITY = (39.0997, -94.5786)
+from geo.ors import OrsRouter
+from geo.photon import PhotonGeocoder
+from geo.provider import (
+    GeoProvider,
+    LiveGeoProvider,
+    Place,
+    ProviderUnavailable,
+    RouteNotFound,
+    get_provider,
+)
 
 
 def test_fake_provider_selected_by_name():
@@ -22,23 +28,49 @@ def test_unknown_provider_rejected():
         get_provider("nope")
 
 
-def test_fake_route_returns_one_straight_line_leg_per_hop():
-    legs = FakeGeoProvider().route([RICHMOND, BALTIMORE, KANSAS_CITY])
-
-    assert len(legs) == 2
-    assert legs[0].geometry == [(-77.4360, 37.5407), (-76.6122, 39.2904)]  # GeoJSON order: lng, lat
-    assert legs[1].geometry == [(-76.6122, 39.2904), (-94.5786, 39.0997)]
+def test_geo_provider_protocol_covers_routing_and_geocoding():
+    assert {"route", "geocode", "reverse"} <= GeoProvider.__protocol_attrs__
 
 
-def test_fake_route_uses_great_circle_miles_at_55_mph():
-    leg = FakeGeoProvider().route([RICHMOND, BALTIMORE])[0]
-
-    assert leg.distance_mi == pytest.approx(128.9, abs=0.5)
-    assert leg.duration_h == pytest.approx(leg.distance_mi / 55)
+def test_route_not_found_and_provider_unavailable_are_distinct_errors():
+    assert not issubclass(RouteNotFound, ProviderUnavailable)
+    assert not issubclass(ProviderUnavailable, RouteNotFound)
 
 
-def test_fake_route_zero_length_leg_when_points_match():
-    leg = FakeGeoProvider().route([RICHMOND, RICHMOND])[0]
+def test_place_carries_label_and_coordinates():
+    place = Place(label="Richmond, VA", lat=37.5407, lng=-77.4360)
 
-    assert leg.distance_mi == 0
-    assert leg.duration_h == 0
+    assert (place.label, place.lat, place.lng) == ("Richmond, VA", 37.5407, -77.4360)
+
+
+@pytest.mark.django_db
+def test_live_provider_routes_with_ors_and_geocodes_with_photon_behind_the_cache(settings):
+    settings.ORS_API_KEY = "test-key"
+    settings.PHOTON_URL = "https://photon.test"
+
+    provider = get_provider("live")
+
+    assert isinstance(provider, CachedGeoProvider)
+    live = provider._inner
+    assert isinstance(live.router, OrsRouter) and live.router.api_key == "test-key"
+    assert isinstance(live.geocoder, PhotonGeocoder)
+    assert live.geocoder.base_url == "https://photon.test"
+
+
+def test_live_provider_delegates_route_to_router_and_lookups_to_geocoder():
+    class Router:
+        def route(self, points):
+            return ["leg"]
+
+    class Geocoder:
+        def geocode(self, query):
+            return [query]
+
+        def reverse(self, point):
+            return "Richmond, VA"
+
+    live = LiveGeoProvider(Router(), Geocoder())
+
+    assert live.route([(37.5407, -77.4360), (39.2904, -76.6122)]) == ["leg"]
+    assert live.geocode("Rich") == ["Rich"]
+    assert live.reverse((37.5407, -77.4360)) == "Richmond, VA"

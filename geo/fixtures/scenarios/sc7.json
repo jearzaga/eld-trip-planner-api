@@ -1,0 +1,9 @@
+{
+  "spec_id": "SC-7",
+  "name": "Pickup at current location",
+  "points": [[37.5407, -77.4360], [37.5407, -77.4360], [39.9526, -75.1652]],
+  "legs": [
+    {"distance_mi": 0, "duration_h": 0},
+    {"distance_mi": 180, "duration_h": 3}
+  ]
+}

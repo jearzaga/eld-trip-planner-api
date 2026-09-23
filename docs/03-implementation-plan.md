@@ -22,17 +22,19 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 ## What's left (next up)
 
-_Updated 2026-09-24 after A2 (HOS engine) and A3 (log builder) landed._
+_Updated 2026-09-24 after A4 (geo services) landed._
 
 1. **A1 ✅ (merged, PR #2).** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`);
    the AC-34 John Doe golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
 2. **W1 ✅ (merged, web PR #2).** Playwright harness + every AC as a `fixme` spec; W1-07 CI deferred.
 3. **A2 ✅ A3 ✅** (HOS engine, log builder). `plan_timeline` → `build_daily_logs` reproduces SC-1…SC-5 sheets, each totalling 24 h.
-   **Next: A4 (geo services) → A5 (API + contract).**
-4. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
+   **Next: A5 (API + contract).**
+4. **A4 ✅** (geo services). Fake provider serves SC-1…SC-7; `GEO_PROVIDER=live` = ORS `driving-hgv` + Photon behind
+   the Mongo TTL caches; `ensure_indexes` is back in the Render build command.
+5. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
    `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. **A0-07 CI is ⏭️ deferred** (see *Decision log*):
    run the checks locally before each PR until it is re-added.
-5. **A10, A11** at the end (production deploy, README / Loom).
+6. **A10, A11** at the end (production deploy, README / Loom).
 
 ## Progress overview (API)
 
@@ -42,7 +44,7 @@ _Updated 2026-09-24 after A2 (HOS engine) and A3 (log builder) landed._
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
 | A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ✅ | John Doe golden + SC-1…SC-5 logs total 24 |
-| A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
+| A4 | Geo services | 0.5 d | ✅ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
 | A10 | Production deploy (Render) | 0.25 d | ⬜ | Live provider works on Render; web `@smoke` green |
 | A11 | Deliverables (API) | 0.25 d | ⬜ | README final |
@@ -121,13 +123,13 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A4-01 | `GeoProvider` protocol finalized (`route`, `geocode`, `reverse`) | `test_provider_factory.py` | ⬜ |
-| A4-02 | `route_math.py`: haversine, cumulative distance, `point_at_mile` | `test_route_math.py` | ⬜ |
-| A4-03 | `ors.py` `driving-hgv` → legs (mi, h) + GeoJSON; errors → `RouteNotFound` / `ProviderUnavailable` | `test_ors.py` (respx) | ⬜ |
-| A4-04 | `photon.py` search + reverse → "City, ST" | `test_photon.py` (respx) | ⬜ |
-| A4-05 | `fake.py` full scenario fixtures SC-1…SC-7 (SC-6 raises) + straight-line fallback | `test_fake_provider.py` | ⬜ |
-| A4-06 | `timezone.py` | `test_timezone.py` | ⬜ |
-| A4-07 | Mongo caches with TTL + `ensure_indexes` command | `test_cache.py` | ⬜ |
+| A4-01 | `GeoProvider` protocol finalized (`route`, `geocode`, `reverse`) | `test_provider_factory.py` | ✅ |
+| A4-02 | `route_math.py`: haversine, cumulative distance, `point_at_mile` | `test_route_math.py` | ✅ |
+| A4-03 | `ors.py` `driving-hgv` → legs (mi, h) + GeoJSON; errors → `RouteNotFound` / `ProviderUnavailable` | `test_ors.py` (respx) | ✅ |
+| A4-04 | `photon.py` search + reverse → "City, ST" | `test_photon.py` (respx) | ✅ |
+| A4-05 | `fake.py` full scenario fixtures SC-1…SC-7 (SC-6 raises) + straight-line fallback | `test_fake_provider.py` | ✅ |
+| A4-06 | `timezone.py` | `test_timezone.py` | ✅ |
+| A4-07 | Mongo caches with TTL + `ensure_indexes` command | `test_cache.py` | ✅ |
 
 **Gate:** `pytest tests/unit/geo` green; no real network (respx `assert_all_mocked`).
 

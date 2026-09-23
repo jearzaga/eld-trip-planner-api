@@ -1,0 +1,120 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 123456,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Virginia",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-77.4360, 37.5407]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 123457,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Virginia",
+        "country": "United States",
+        "type": "district"
+      },
+      "geometry": {"type": "Point", "coordinates": [-77.4361, 37.5408]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 234567,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Indiana",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-84.8902, 39.8289]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 345678,
+        "countrycode": "CA",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "British Columbia",
+        "country": "Canada",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-123.1336, 49.1666]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 456789,
+        "countrycode": "US",
+        "name": "Richmond Heights",
+        "state": "Missouri",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-90.3223, 38.6314]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 567890,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "California",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-122.3477, 37.9358]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 678901,
+        "countrycode": "US",
+        "name": "Richmond",
+        "state": "Puerto Rico Territory",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-66.1057, 18.4655]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 789012,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Kentucky",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-84.2910, 37.7479]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 890123,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Texas",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-95.7603, 29.5822]}
+    }
+  ]
+}

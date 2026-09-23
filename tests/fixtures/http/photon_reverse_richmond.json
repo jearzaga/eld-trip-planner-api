@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "osm_id": 123456,
+        "countrycode": "US",
+        "name": "Richmond",
+        "city": "Richmond",
+        "state": "Virginia",
+        "country": "United States",
+        "type": "city"
+      },
+      "geometry": {"type": "Point", "coordinates": [-77.4360, 37.5407]}
+    }
+  ]
+}
