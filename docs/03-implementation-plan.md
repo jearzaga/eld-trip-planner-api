@@ -109,7 +109,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A3-03 | Totals per status; sum 24 | `test_log_builder_totals.py` | ✅ |
 | A3-04 | **Golden** John Doe: totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks | `test_john_doe_example_log_matches_totals_and_remarks` | ⬜ |
 | A3-05 | Remarks at every status change (R-09) | `test_log_builder_remarks.py` | ✅ |
-| A3-06 | Header fields (R-11) | `test_header_*` | ⬜ |
+| A3-06 | Header fields (R-11) | `test_log_builder_header.py` | ✅ |
 | A3-07 | Recap A/B/C + restart flag (R-12, A-14): SC-2 Day 1 A 32.25 / B 37.75, Day 2 A 43 / B 27 | `test_recap_*` | ⬜ |
 | A3-08 | Time zone: Pacific start, Eastern home terminal → Eastern times | `test_timezone_*` | ⬜ |
 | A3-09 | ⏭️ Stretch: `prior_daily_hours[7]` true rolling 8-day (guide p.11: 67 → 73 → 63) | `test_rolling_cycle.py` | ⏭️ |
