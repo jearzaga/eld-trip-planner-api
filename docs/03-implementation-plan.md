@@ -85,7 +85,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 |---|---|---|---|
 | A2-01 | `hos/models.py` dataclasses (`DutyStatus`, `Leg`, `TripInput`, `Segment`, `Stop`, `Timeline`); `hos/rules.py` constants with R-IDs | `test_models.py` | ✅ |
 | A2-02 | `ceil_q` / `floor_q` helpers | `test_time_utils.py` | ✅ |
-| A2-03 | Basic sequence pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip (SC-1) | `test_engine_basic.py` | ⬜ |
+| A2-03 | Basic sequence pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip (SC-1) | `test_engine_basic.py` | ✅ |
 | A2-04 | R-03 30-min break; non-driving ≥ 30 min resets (pickup/fuel count; 15 ON + 15 OFF counts; split 15s don't) | `test_engine_break.py` | ⬜ |
 | A2-05 | R-01 + R-05 11-h limit → 10-h SB reset; new shift after ≥ 10 h OFF/SB | `test_engine_11h.py` | ⬜ |
 | A2-06 | R-02 14-h window; breaks don't extend it; ON allowed after 14th hour | `test_engine_14h.py` (guide p.6: on at 06:00 → no driving after 20:00) | ⬜ |
