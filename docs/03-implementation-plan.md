@@ -22,12 +22,13 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 ## What's left (next up)
 
-_Updated 2026-09-23 after W1 merged (web PR #2) and the shared `hos/` foundation (A2-01, A2-02, A2-14) landed._
+_Updated 2026-09-24 after A2 (HOS engine) and A3 (log builder) landed._
 
 1. **A1 ✅ (merged, PR #2).** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`);
    the AC-34 John Doe golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
 2. **W1 ✅ (merged, web PR #2).** Playwright harness + every AC as a `fixme` spec; W1-07 CI deferred.
-3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). W1 and A1 are ✅, so feature work is open. A2 and A3 run in parallel on the shared `hos/models.py` from A2-01.
+3. **A2 ✅ A3 ✅** (HOS engine, log builder). `plan_timeline` → `build_daily_logs` reproduces SC-1…SC-5 sheets, each totalling 24 h.
+   **Next: A4 (geo services) → A5 (API + contract).**
 4. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
    `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. **A0-07 CI is ⏭️ deferred** (see *Decision log*):
    run the checks locally before each PR until it is re-added.
@@ -40,7 +41,7 @@ _Updated 2026-09-23 after W1 merged (web PR #2) and the shared `hos/` foundation
 | A0 | Repo & tooling foundation | 0.5 d | ✅ | Health endpoint green locally and on Render (CI deferred) |
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
 | A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
-| A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
+| A3 | Log builder | 0.5 d | ✅ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
 | A10 | Production deploy (Render) | 0.25 d | ⬜ | Live provider works on Render; web `@smoke` green |
@@ -104,14 +105,14 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A3-01 | Trip minutes → aware datetimes in home tz; pad OFF to local midnights | `test_padding_*` | ⬜ |
-| A3-02 | Split at local midnight (rest crossing midnight) | `test_split_*` | ⬜ |
-| A3-03 | Totals per status; sum 24 | `test_totals_*` | ⬜ |
-| A3-04 | **Golden** John Doe: totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks | `test_john_doe_example_log_matches_totals_and_remarks` | ⬜ |
-| A3-05 | Remarks at every status change (R-09) | `test_remarks_*` | ⬜ |
-| A3-06 | Header fields (R-11) | `test_header_*` | ⬜ |
-| A3-07 | Recap A/B/C + restart flag (R-12, A-14): SC-2 Day 1 A 32.25 / B 37.75, Day 2 A 43 / B 27 | `test_recap_*` | ⬜ |
-| A3-08 | Time zone: Pacific start, Eastern home terminal → Eastern times | `test_timezone_*` | ⬜ |
+| A3-01 | Trip minutes → aware datetimes in home tz; pad OFF to local midnights | `test_log_builder_padding.py` | ✅ |
+| A3-02 | Split at local midnight (rest crossing midnight) | `test_log_builder_split.py` | ✅ |
+| A3-03 | Totals per status; sum 24 | `test_log_builder_totals.py` | ✅ |
+| A3-04 | **Golden** John Doe: totals 10 / 1.75 / 7.75 / 4.5 + 6 remarks | `test_john_doe_example_log_matches_totals_and_remarks` | ✅ |
+| A3-05 | Remarks at every status change (R-09) | `test_log_builder_remarks.py` | ✅ |
+| A3-06 | Header fields (R-11) | `test_log_builder_header.py` | ✅ |
+| A3-07 | Recap A/B/C + restart flag (R-12, A-14): SC-2 Day 1 A 32.25 / B 37.75, Day 2 A 43 / B 27 | `test_log_builder_recap.py` | ✅ |
+| A3-08 | Time zone: Pacific start, Eastern home terminal → Eastern times | `test_log_builder_timezone.py` | ✅ |
 | A3-09 | ⏭️ Stretch: `prior_daily_hours[7]` true rolling 8-day (guide p.11: 67 → 73 → 63) | `test_rolling_cycle.py` | ⏭️ |
 
 **Gate:** SC-1…SC-5 daily logs total 24; John Doe golden green.
