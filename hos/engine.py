@@ -47,7 +47,9 @@ class _State:
 
     def drive(self, minutes: int, leg: Leg) -> int:
         self.start_shift_if_needed()
-        self.segments.append(Segment(DutyStatus.D, self.t, self.t + minutes, self.total_miles))
+        self.segments.append(
+            Segment(DutyStatus.D, self.t, self.t + minutes, self.total_miles, "Driving")  # R-09
+        )
         miles = minutes / 60 * leg.mph
         self.t += minutes
         self.total_miles += miles

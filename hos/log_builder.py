@@ -149,8 +149,8 @@ def _raw_pieces(timeline: Timeline, start_utc: datetime, tz: ZoneInfo) -> list[_
                 end_dt=day_after_end,
                 mile_start=last_mile,
                 mile_end=last_mile,
-                note=None,
-                location=None,
+                note="Off duty",  # R-09
+                location=segments[-1].location if segments else None,
                 is_continuation=False,
             )
         )

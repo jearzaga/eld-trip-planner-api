@@ -177,7 +177,7 @@
           "status": "D",
           "start_min": 375,
           "end_min": 495,
-          "note": null,
+          "note": "Driving",
           "location": "Richmond, VA"
         },
         {
@@ -191,7 +191,7 @@
           "status": "D",
           "start_min": 555,
           "end_min": 1035,
-          "note": null,
+          "note": "Driving",
           "location": "Baltimore, MD"
         },
         {
@@ -205,7 +205,7 @@
           "status": "D",
           "start_min": 1065,
           "end_min": 1125,
-          "note": null,
+          "note": "Driving",
           "location": "near Dayton, OH"
         },
         {
@@ -231,7 +231,7 @@
         {
           "at_min": 375,
           "location": "Richmond, VA",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 495,
@@ -241,7 +241,7 @@
         {
           "at_min": 555,
           "location": "Baltimore, MD",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 1035,
@@ -251,7 +251,7 @@
         {
           "at_min": 1065,
           "location": "near Dayton, OH",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 1125,
@@ -297,7 +297,7 @@
           "status": "D",
           "start_min": 285,
           "end_min": 615,
-          "note": null,
+          "note": "Driving",
           "location": "near Indianapolis, IN"
         },
         {
@@ -311,7 +311,7 @@
           "status": "D",
           "start_min": 645,
           "end_min": 855,
-          "note": null,
+          "note": "Driving",
           "location": "near St. Louis, MO"
         },
         {
@@ -332,8 +332,8 @@
           "status": "OFF",
           "start_min": 930,
           "end_min": 1440,
-          "note": null,
-          "location": null
+          "note": "Off duty",
+          "location": "Kansas City, MO"
         }
       ],
       "totals": {
@@ -346,7 +346,7 @@
         {
           "at_min": 285,
           "location": "near Indianapolis, IN",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 615,
@@ -356,7 +356,7 @@
         {
           "at_min": 645,
           "location": "near St. Louis, MO",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 855,
@@ -367,6 +367,11 @@
           "at_min": 915,
           "location": "Kansas City, MO",
           "note": "Post-trip inspection"
+        },
+        {
+          "at_min": 930,
+          "location": "Kansas City, MO",
+          "note": "Off duty"
         }
       ],
       "recap": {

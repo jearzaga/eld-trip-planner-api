@@ -210,6 +210,8 @@ scenarios, `id` fixed to a deterministic ObjectId).
 `stop.type` ∈ `pickup | fuel | break_30 | rest_10 | restart_34 | dropoff`. Pre/post-trip inspections are not map stops;
 they appear only in the log segments and remarks. `summary.stop_count == len(stops)`. Every `segments[]` entry always
 carries `note` and `location`, nullable; every `remarks[]` entry's `location`/`note` are also nullable.
+Every duty-status change gets a remark with a location and a reason (R-09): driving segments carry `note: "Driving"`,
+and the off-duty padding after the trip ends carries `note: "Off duty"` at the trip's last location.
 
 ### 5.1 Contract artifacts (how the web repo stays in sync)
 

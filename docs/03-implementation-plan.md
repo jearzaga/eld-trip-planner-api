@@ -183,6 +183,7 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | 2026-09-23 | **No `render.yaml`.** The Render service was created in the dashboard, so a Blueprint file would be ignored and could drift from the real config. Settings are documented in `02-architecture.md` §7 instead | 02 §7 |
 | 2026-09-23 | **Engine ↔ log builder contract.** `Segment` carries `mile_marker` (miles at segment start) and an optional `location`; `trips/services.py` fills `location` from reverse geocoding before the log builder writes remarks. `build_daily_logs(timeline, *, start_utc, home_tz, cycle_used_min, meta)` takes the engine's `Timeline`, so A2 and A3 can be built in parallel | 02 §4 |
 | 2026-09-23 | **CI deferred (A0-07, and web W0-05/W1-07).** Removed `.github/workflows/ci.yml` from both repos. Every run would connect to the shared Atlas cluster, and CI adds little while one person builds the foundation. Until it returns, run the checks locally before each PR (`CLAUDE.md` definition of done). When re-added, use a throwaway MongoDB service container (`mongo:8`, `MONGODB_URI=mongodb://localhost:27017`) instead of an Atlas secret, then switch Render Auto-Deploy to *After CI checks pass* | 04 §7 |
+| 2026-09-24 | **Remark reason at every duty-status change.** Driving segments carry the note `Driving`; the off-duty padding after the trip carries `Off duty` at the last location, so every change (including the final ON→OFF) has a "City, ST" remark with a reason. Contract fixtures regenerated | R-09, AC-25 |
 
 ## Blockers / open questions
 
