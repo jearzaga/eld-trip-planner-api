@@ -22,14 +22,12 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 ## What's left (next up)
 
-_Updated 2026-09-23 after A0-08 (Render deploy) landed and CI was deferred._
+_Updated 2026-09-23 after W1 merged (web PR #2) and the shared `hos/` foundation (A2-01, A2-02, A2-14) landed._
 
 1. **A1 ✅ (merged, PR #2).** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`);
    the AC-34 John Doe golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
-   No API work is unblocked until W1 lands.
-2. **W0 → W1 in the web repo.** W0-02 (project setup) is ✅; W0-03…W0-06 remain. W1 (Playwright harness + `fixme` specs) is unblocked
-   on the API side: health endpoint and fake provider are done.
-3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). Blocked only on **W1** now that A1 is ✅.
+2. **W1 ✅ (merged, web PR #2).** Playwright harness + every AC as a `fixme` spec; W1-07 CI deferred.
+3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). W1 and A1 are ✅, so feature work is open. A2 and A3 run in parallel on the shared `hos/models.py` from A2-01.
 4. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
    `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. **A0-07 CI is ⏭️ deferred** (see *Decision log*):
    run the checks locally before each PR until it is re-added.
@@ -41,7 +39,7 @@ _Updated 2026-09-23 after A0-08 (Render deploy) landed and CI was deferred._
 |---|---|---|---|---|
 | A0 | Repo & tooling foundation | 0.5 d | ✅ | Health endpoint green locally and on Render (CI deferred) |
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
-| A2 | HOS engine (pure Python) | 1 d | ⬜ | Goldens + property tests green; `hos/` ≥ 95 % |
+| A2 | HOS engine (pure Python) | 1 d | 🟨 | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
@@ -85,8 +83,8 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A2-01 | `hos/models.py` dataclasses (`DutyStatus`, `Leg`, `TripInput`, `Segment`, `Stop`, `Timeline`); `hos/rules.py` constants with R-IDs | `test_models.py` | ⬜ |
-| A2-02 | `ceil_q` / `floor_q` helpers | `test_time_utils.py` | ⬜ |
+| A2-01 | `hos/models.py` dataclasses (`DutyStatus`, `Leg`, `TripInput`, `Segment`, `Stop`, `Timeline`); `hos/rules.py` constants with R-IDs | `test_models.py` | ✅ |
+| A2-02 | `ceil_q` / `floor_q` helpers | `test_time_utils.py` | ✅ |
 | A2-03 | Basic sequence pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip (SC-1) | `test_engine_basic.py` | ⬜ |
 | A2-04 | R-03 30-min break; non-driving ≥ 30 min resets (pickup/fuel count; 15 ON + 15 OFF counts; split 15s don't) | `test_engine_break.py` | ⬜ |
 | A2-05 | R-01 + R-05 11-h limit → 10-h SB reset; new shift after ≥ 10 h OFF/SB | `test_engine_11h.py` | ⬜ |
@@ -98,7 +96,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A2-11 | **Golden** SC-2 exact segments = business rules §8 | `test_engine_worked_example.py` | ⬜ |
 | A2-12 | **Property tests** (Hypothesis) — invariants from architecture §4.1 | `test_engine_invariants.py` | ⬜ |
 | A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ⬜ |
-| A2-14 | Purity guard | `test_purity.py` | ⬜ |
+| A2-14 | Purity guard | `test_purity.py` | ✅ |
 
 **Gate:** `pytest tests/unit/hos` green; `hos/` coverage ≥ 95 %.
 
@@ -178,6 +176,7 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | 2026-09-23 | Cycle-used treated as non-rolling during trip (conservative) | A-04 |
 | 2026-09-23 | MongoDB Atlas M0 in every environment (dev, tests, E2E, CI, Render); no local MongoDB or Docker. One DB name per environment via `MONGODB_DB` | 06 §6 |
 | 2026-09-23 | **No `render.yaml`.** The Render service was created in the dashboard, so a Blueprint file would be ignored and could drift from the real config. Settings are documented in `02-architecture.md` §7 instead | 02 §7 |
+| 2026-09-23 | **Engine ↔ log builder contract.** `Segment` carries `mile_marker` (miles at segment start) and an optional `location`; `trips/services.py` fills `location` from reverse geocoding before the log builder writes remarks. `build_daily_logs(timeline, *, start_utc, home_tz, cycle_used_min, meta)` takes the engine's `Timeline`, so A2 and A3 can be built in parallel | 02 §4 |
 | 2026-09-23 | **CI deferred (A0-07, and web W0-05/W1-07).** Removed `.github/workflows/ci.yml` from both repos. Every run would connect to the shared Atlas cluster, and CI adds little while one person builds the foundation. Until it returns, run the checks locally before each PR (`CLAUDE.md` definition of done). When re-added, use a throwaway MongoDB service container (`mongo:8`, `MONGODB_URI=mongodb://localhost:27017`) instead of an Atlas secret, then switch Render Auto-Deploy to *After CI checks pass* | 04 §7 |
 
 ## Blockers / open questions
