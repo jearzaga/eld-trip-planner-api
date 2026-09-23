@@ -37,9 +37,8 @@ uv export --no-dev --no-hashes -o requirements.txt   # commit it; Render install
 ## 5. First Render deploy (A0-08) — do it on Day 1
 
 1. **Atlas:** reuse the M0 cluster from A0-02 (`06-project-setup.md` §6). Copy its SRV URI.
-2. Add `render.yaml` (see `02-architecture.md` §7) and push.
-3. **Render → New → Blueprint** → select the repo → fill the `sync: false` env vars (`MONGODB_URI`, `CORS_ALLOWED_ORIGINS`,
-   leave `ORS_API_KEY` blank for now) and set `GEO_PROVIDER=fake` until A10.
+2. **Render → New → Web Service** → select the repo.
+3. Set the build/start commands, health check path and env vars from `02-architecture.md` §7 (`GEO_PROVIDER=fake` until A10).
 4. In the service settings, set **Auto-Deploy** to deploy only after CI checks pass.
 5. `curl https://<api>.onrender.com/api/health/` → `{"status":"ok"}`. Tell the web repo the URL.
 

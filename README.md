@@ -7,7 +7,7 @@ stop, and fully computed Driver's Daily Logs.
 |---|---|
 | Frontend repo | `https://github.com/<you>/eld-trip-planner-web` |
 | Live app | _TBD — https://<app>.vercel.app_ |
-| Live API | _TBD — https://<api>.onrender.com/api/health/_ |
+| Live API | https://eld-trip-planner-api-ozav.onrender.com/api/health/ |
 | Loom | _TBD_ |
 
 > 🚧 In development — tracker: [`docs/03-implementation-plan.md`](docs/03-implementation-plan.md)

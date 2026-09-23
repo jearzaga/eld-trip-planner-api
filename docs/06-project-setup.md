@@ -333,7 +333,7 @@ uv run python manage.py shell -c "from django.db import connection; print(connec
 | Local dev | `eld_dev` | `test_eld_dev` |
 | E2E (Playwright boots the API) | `eld_e2e` | — |
 | CI (GitHub Actions) | `eld_ci` | `test_eld_ci` (separate, so CI can't clash with a local test run) |
-| Render (production) | `eld` (set in `render.yaml`) | — |
+| Render (production) | `eld` (set in the Render dashboard) | — |
 
 > M0 limits: 512 MB storage, 500 collections, 100 databases, shared CPU. That's plenty for this project.
 
@@ -450,8 +450,6 @@ htmlcov/
 .ruff_cache/
 .hypothesis/
 ```
-
-**`render.yaml`**: see `02-architecture.md` §7.
 
 **`.github/workflows/ci.yml`** (minimal; extended in A5 with contract drift checks). Add the Atlas URI as a repository
 secret first: GitHub → *Settings → Secrets and variables → Actions* → `MONGODB_URI`.
