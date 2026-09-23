@@ -149,7 +149,7 @@ components:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/StatusA32Enum'
+          $ref: '#/components/schemas/DutyStatusEnum'
         start_min:
           type: integer
         end_min:
@@ -166,6 +166,18 @@ components:
       - note
       - start_min
       - status
+    DutyStatusEnum:
+      enum:
+      - 'OFF'
+      - SB
+      - D
+      - 'ON'
+      type: string
+      description: |-
+        * `OFF` - OFF
+        * `SB` - SB
+        * `D` - D
+        * `ON` - ON
     DutyTotals:
       type: object
       properties:
@@ -229,10 +241,10 @@ components:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/HealthResponseStatusEnum'
+          $ref: '#/components/schemas/HealthStatusEnum'
       required:
       - status
-    HealthResponseStatusEnum:
+    HealthStatusEnum:
       enum:
       - ok
       - unavailable
@@ -418,25 +430,13 @@ components:
       - duration_hrs
       - from
       - to
-    StatusA32Enum:
-      enum:
-      - 'OFF'
-      - SB
-      - D
-      - 'ON'
-      type: string
-      description: |-
-        * `OFF` - OFF
-        * `SB` - SB
-        * `D` - D
-        * `ON` - ON
     Stop:
       type: object
       properties:
         seq:
           type: integer
         type:
-          $ref: '#/components/schemas/TypeEnum'
+          $ref: '#/components/schemas/StopTypeEnum'
         label:
           type: string
         lat:
@@ -455,7 +455,7 @@ components:
         duration_min:
           type: integer
         status:
-          $ref: '#/components/schemas/StatusA32Enum'
+          $ref: '#/components/schemas/DutyStatusEnum'
       required:
       - arrive_at
       - depart_at
@@ -467,6 +467,22 @@ components:
       - seq
       - status
       - type
+    StopTypeEnum:
+      enum:
+      - pickup
+      - fuel
+      - break_30
+      - rest_10
+      - restart_34
+      - dropoff
+      type: string
+      description: |-
+        * `pickup` - pickup
+        * `fuel` - fuel
+        * `break_30` - break_30
+        * `rest_10` - rest_10
+        * `restart_34` - restart_34
+        * `dropoff` - dropoff
     TripInputs:
       type: object
       properties:
@@ -589,19 +605,3 @@ components:
       - total_driving_hrs
       - total_miles
       - total_on_duty_hrs
-    TypeEnum:
-      enum:
-      - pickup
-      - fuel
-      - break_30
-      - rest_10
-      - restart_34
-      - dropoff
-      type: string
-      description: |-
-        * `pickup` - pickup
-        * `fuel` - fuel
-        * `break_30` - break_30
-        * `rest_10` - rest_10
-        * `restart_34` - restart_34
-        * `dropoff` - dropoff
