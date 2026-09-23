@@ -128,7 +128,8 @@ def plan_timeline(trip: TripInput) -> Timeline:
 ## 5. API contract (shared with the web repo)
 
 Base path `/api`. JSON. CORS limited to the web origins. Errors always:
-`{"error": {"code": str, "message": str, "fields": {name: [msg]}}}`.
+`{"error": {"code": str, "message": str, "fields": {name: [msg]}}}` — `fields` is `{}` for any error that isn't a
+validation failure (`NOT_FOUND`, `ROUTE_NOT_FOUND`, `PROVIDER_UNAVAILABLE`, ...).
 
 | Method | Path | Purpose | Success |
 |---|---|---|---|
@@ -160,9 +161,12 @@ Base path `/api`. JSON. CORS limited to the web origins. Errors always:
 }
 ```
 
-Only `current`, `pickup`, `dropoff`, `cycle_used_hrs` are required.
+Only `current`, `pickup`, `dropoff`, `cycle_used_hrs` are required. `start_time`, when given, must fall on a quarter
+hour (`:00`/`:15`/`:30`/`:45`, A-10); otherwise it defaults to the next quarter hour at or after now.
 
-**`TripResponse`** (values from the `SC-2` fake fixture: legs 120 mi + 1,080 mi)
+**`TripResponse`** (values from the `SC-2` fake fixture: legs 120 mi + 1,080 mi). The exact, byte-for-byte examples are
+`tests/fixtures/trip_response_example.json` (SC-1) and `tests/fixtures/responses/sc1…sc7.json` (all canonical
+scenarios, `id` fixed to a deterministic ObjectId).
 
 ```json
 {
@@ -187,11 +191,13 @@ Only `current`, `pickup`, `dropoff`, `cycle_used_hrs` are required.
       "day_number": 1, "date": "2026-09-24",
       "header": { "from": "Richmond, VA", "to": "near Dayton, OH",
                   "miles_driving_today": 660.0, "total_mileage_today": 660.0,
+                  "driver_name": "John Doe", "co_driver_name": "",
                   "carrier_name": "…", "main_office_address": "…", "home_terminal_address": "…",
                   "truck_tractor_no": "123", "trailer_no": "456",
                   "shipping_doc_no": "BOL-10001", "shipper_commodity": "…" },
-      "segments": [ { "status": "OFF", "start_min": 0, "end_min": 360 },
-                    { "status": "ON", "start_min": 360, "end_min": 375, "note": "Pre-trip inspection" } ],
+      "segments": [ { "status": "OFF", "start_min": 0, "end_min": 360, "note": null, "location": null },
+                    { "status": "ON", "start_min": 360, "end_min": 375,
+                      "note": "Pre-trip inspection", "location": "Richmond, VA" } ],
       "totals": { "OFF": 6.5, "SB": 5.25, "D": 11.0, "ON": 1.25 },
       "remarks": [ { "at_min": 360, "location": "Richmond, VA", "note": "Pre-trip inspection" } ],
       "recap": { "on_duty_today": 12.25, "a_last_7": 32.25, "b_available_tomorrow": 37.75,
@@ -202,7 +208,8 @@ Only `current`, `pickup`, `dropoff`, `cycle_used_hrs` are required.
 ```
 
 `stop.type` ∈ `pickup | fuel | break_30 | rest_10 | restart_34 | dropoff`. Pre/post-trip inspections are not map stops;
-they appear only in the log segments and remarks. `summary.stop_count == len(stops)`.
+they appear only in the log segments and remarks. `summary.stop_count == len(stops)`. Every `segments[]` entry always
+carries `note` and `location`, nullable; every `remarks[]` entry's `location`/`note` are also nullable.
 
 ### 5.1 Contract artifacts (how the web repo stays in sync)
 

@@ -1,0 +1,503 @@
+{
+  "id": "000000000000000000000003",
+  "inputs": {
+    "current": {
+      "label": "Richmond, VA",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "pickup": {
+      "label": "Baltimore, MD",
+      "lat": 39.2904,
+      "lng": -76.6122
+    },
+    "dropoff": {
+      "label": "Kansas City, MO",
+      "lat": 39.0997,
+      "lng": -94.5786
+    },
+    "cycle_used_hrs": 65.0,
+    "start_time": "2026-09-24T06:00",
+    "home_timezone": "America/New_York",
+    "include_inspections": true,
+    "log_meta": {
+      "driver_name": "John Doe",
+      "co_driver_name": "",
+      "carrier_name": "John Doe's Transportation",
+      "main_office_address": "Washington, D.C.",
+      "home_terminal_address": "Richmond, VA",
+      "truck_tractor_no": "123",
+      "trailer_no": "456",
+      "shipping_doc_no": "BOL-10001",
+      "shipper_commodity": "ACME Co. — paper products"
+    }
+  },
+  "summary": {
+    "total_miles": 1200,
+    "total_driving_hrs": 20.0,
+    "total_on_duty_hrs": 23.0,
+    "start_at": "2026-09-24T06:00:00-04:00",
+    "arrive_at": "2026-09-27T00:15:00-04:00",
+    "end_at": "2026-09-27T01:30:00-04:00",
+    "log_days": 4,
+    "stop_count": 6,
+    "cycle_used_end_hrs": 18.0,
+    "home_timezone": "America/New_York"
+  },
+  "route": {
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -77.436,
+          37.5407
+        ],
+        [
+          -76.6122,
+          39.2904
+        ],
+        [
+          -94.5786,
+          39.0997
+        ]
+      ]
+    },
+    "legs": [
+      {
+        "from": "current",
+        "to": "pickup",
+        "distance_mi": 120,
+        "duration_hrs": 2
+      },
+      {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_mi": 1080,
+        "duration_hrs": 18
+      }
+    ]
+  },
+  "stops": [
+    {
+      "seq": 1,
+      "type": "pickup",
+      "label": "Baltimore, MD",
+      "lat": 39.2904,
+      "lng": -76.6122,
+      "mile_marker": 120.0,
+      "arrive_at": "2026-09-24T08:15:00-04:00",
+      "depart_at": "2026-09-24T09:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    },
+    {
+      "seq": 2,
+      "type": "restart_34",
+      "label": "Winchester, VA",
+      "lat": 39.27185972222222,
+      "lng": -78.35893333333334,
+      "mile_marker": 225.0,
+      "arrive_at": "2026-09-24T11:00:00-04:00",
+      "depart_at": "2026-09-25T21:00:00-04:00",
+      "duration_min": 2040,
+      "status": "OFF"
+    },
+    {
+      "seq": 3,
+      "type": "break_30",
+      "label": "near Indianapolis, IN",
+      "lat": 39.187104166666664,
+      "lng": -86.344,
+      "mile_marker": 705.0,
+      "arrive_at": "2026-09-26T05:00:00-04:00",
+      "depart_at": "2026-09-26T05:30:00-04:00",
+      "duration_min": 30,
+      "status": "OFF"
+    },
+    {
+      "seq": 4,
+      "type": "rest_10",
+      "label": "near St. Louis, MO",
+      "lat": 39.155320833333334,
+      "lng": -89.3384,
+      "mile_marker": 885.0,
+      "arrive_at": "2026-09-26T08:30:00-04:00",
+      "depart_at": "2026-09-26T18:30:00-04:00",
+      "duration_min": 600,
+      "status": "SB"
+    },
+    {
+      "seq": 5,
+      "type": "fuel",
+      "label": "near St. Louis, MO",
+      "lat": 39.13678055555555,
+      "lng": -91.08513333333333,
+      "mile_marker": 990.0,
+      "arrive_at": "2026-09-26T20:15:00-04:00",
+      "depart_at": "2026-09-26T20:45:00-04:00",
+      "duration_min": 30,
+      "status": "ON"
+    },
+    {
+      "seq": 6,
+      "type": "dropoff",
+      "label": "Kansas City, MO",
+      "lat": 39.0997,
+      "lng": -94.5786,
+      "mile_marker": 1200.0,
+      "arrive_at": "2026-09-27T00:15:00-04:00",
+      "depart_at": "2026-09-27T01:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    }
+  ],
+  "daily_logs": [
+    {
+      "day_number": 1,
+      "date": "2026-09-24",
+      "header": {
+        "from": "Richmond, VA",
+        "to": "Winchester, VA",
+        "miles_driving_today": 225.0,
+        "total_mileage_today": 225.0,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "OFF",
+          "start_min": 0,
+          "end_min": 360,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "ON",
+          "start_min": 360,
+          "end_min": 375,
+          "note": "Pre-trip inspection",
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "D",
+          "start_min": 375,
+          "end_min": 495,
+          "note": null,
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "ON",
+          "start_min": 495,
+          "end_min": 555,
+          "note": "Pickup",
+          "location": "Baltimore, MD"
+        },
+        {
+          "status": "D",
+          "start_min": 555,
+          "end_min": 660,
+          "note": null,
+          "location": "Baltimore, MD"
+        },
+        {
+          "status": "OFF",
+          "start_min": 660,
+          "end_min": 1440,
+          "note": "34-hour restart",
+          "location": "Winchester, VA"
+        }
+      ],
+      "totals": {
+        "OFF": 19.0,
+        "SB": 0.0,
+        "D": 3.75,
+        "ON": 1.25
+      },
+      "remarks": [
+        {
+          "at_min": 360,
+          "location": "Richmond, VA",
+          "note": "Pre-trip inspection"
+        },
+        {
+          "at_min": 375,
+          "location": "Richmond, VA",
+          "note": null
+        },
+        {
+          "at_min": 495,
+          "location": "Baltimore, MD",
+          "note": "Pickup"
+        },
+        {
+          "at_min": 555,
+          "location": "Baltimore, MD",
+          "note": null
+        },
+        {
+          "at_min": 660,
+          "location": "Winchester, VA",
+          "note": "34-hour restart"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 5.0,
+        "a_last_7": 70.0,
+        "b_available_tomorrow": 0.0,
+        "c_last_5": 70.0,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 2,
+      "date": "2026-09-25",
+      "header": {
+        "from": "Winchester, VA",
+        "to": "Winchester, VA",
+        "miles_driving_today": 180.0,
+        "total_mileage_today": 180.0,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "OFF",
+          "start_min": 0,
+          "end_min": 1260,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "D",
+          "start_min": 1260,
+          "end_min": 1440,
+          "note": null,
+          "location": "Winchester, VA"
+        }
+      ],
+      "totals": {
+        "OFF": 21.0,
+        "SB": 0.0,
+        "D": 3.0,
+        "ON": 0.0
+      },
+      "remarks": [
+        {
+          "at_min": 1260,
+          "location": "Winchester, VA",
+          "note": null
+        }
+      ],
+      "recap": {
+        "on_duty_today": 3.0,
+        "a_last_7": 3.0,
+        "b_available_tomorrow": 67.0,
+        "c_last_5": 3.0,
+        "restart_34_taken": true
+      }
+    },
+    {
+      "day_number": 3,
+      "date": "2026-09-26",
+      "header": {
+        "from": "near Indianapolis, IN",
+        "to": "near St. Louis, MO",
+        "miles_driving_today": 780.0,
+        "total_mileage_today": 780.0,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "D",
+          "start_min": 0,
+          "end_min": 300,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "OFF",
+          "start_min": 300,
+          "end_min": 330,
+          "note": "30-minute break",
+          "location": "near Indianapolis, IN"
+        },
+        {
+          "status": "D",
+          "start_min": 330,
+          "end_min": 510,
+          "note": null,
+          "location": "near Indianapolis, IN"
+        },
+        {
+          "status": "SB",
+          "start_min": 510,
+          "end_min": 1110,
+          "note": "10-hour reset",
+          "location": "near St. Louis, MO"
+        },
+        {
+          "status": "D",
+          "start_min": 1110,
+          "end_min": 1215,
+          "note": null,
+          "location": "near St. Louis, MO"
+        },
+        {
+          "status": "ON",
+          "start_min": 1215,
+          "end_min": 1245,
+          "note": "Fuel",
+          "location": "near St. Louis, MO"
+        },
+        {
+          "status": "D",
+          "start_min": 1245,
+          "end_min": 1440,
+          "note": null,
+          "location": "near St. Louis, MO"
+        }
+      ],
+      "totals": {
+        "OFF": 0.5,
+        "SB": 10.0,
+        "D": 13.0,
+        "ON": 0.5
+      },
+      "remarks": [
+        {
+          "at_min": 300,
+          "location": "near Indianapolis, IN",
+          "note": "30-minute break"
+        },
+        {
+          "at_min": 330,
+          "location": "near Indianapolis, IN",
+          "note": null
+        },
+        {
+          "at_min": 510,
+          "location": "near St. Louis, MO",
+          "note": "10-hour reset"
+        },
+        {
+          "at_min": 1110,
+          "location": "near St. Louis, MO",
+          "note": null
+        },
+        {
+          "at_min": 1215,
+          "location": "near St. Louis, MO",
+          "note": "Fuel"
+        },
+        {
+          "at_min": 1245,
+          "location": "near St. Louis, MO",
+          "note": null
+        }
+      ],
+      "recap": {
+        "on_duty_today": 13.5,
+        "a_last_7": 16.5,
+        "b_available_tomorrow": 53.5,
+        "c_last_5": 16.5,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 4,
+      "date": "2026-09-27",
+      "header": {
+        "from": "Kansas City, MO",
+        "to": "Kansas City, MO",
+        "miles_driving_today": 15.0,
+        "total_mileage_today": 15.0,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "D",
+          "start_min": 0,
+          "end_min": 15,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "ON",
+          "start_min": 15,
+          "end_min": 75,
+          "note": "Dropoff",
+          "location": "Kansas City, MO"
+        },
+        {
+          "status": "ON",
+          "start_min": 75,
+          "end_min": 90,
+          "note": "Post-trip inspection",
+          "location": "Kansas City, MO"
+        },
+        {
+          "status": "OFF",
+          "start_min": 90,
+          "end_min": 1440,
+          "note": null,
+          "location": null
+        }
+      ],
+      "totals": {
+        "OFF": 22.5,
+        "SB": 0.0,
+        "D": 0.25,
+        "ON": 1.25
+      },
+      "remarks": [
+        {
+          "at_min": 15,
+          "location": "Kansas City, MO",
+          "note": "Dropoff"
+        },
+        {
+          "at_min": 75,
+          "location": "Kansas City, MO",
+          "note": "Post-trip inspection"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 1.5,
+        "a_last_7": 18.0,
+        "b_available_tomorrow": 52.0,
+        "c_last_5": 18.0,
+        "restart_34_taken": false
+      }
+    }
+  ]
+}

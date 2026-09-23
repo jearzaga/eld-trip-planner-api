@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "ROUTE_NOT_FOUND",
+    "message": "No truck route connects these locations.",
+    "fields": {}
+  }
+}

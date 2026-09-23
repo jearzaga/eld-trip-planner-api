@@ -1,0 +1,218 @@
+{
+  "id": "000000000000000000000007",
+  "inputs": {
+    "current": {
+      "label": "Richmond, VA",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "pickup": {
+      "label": "Richmond, VA",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "dropoff": {
+      "label": "Philadelphia, PA",
+      "lat": 39.9526,
+      "lng": -75.1652
+    },
+    "cycle_used_hrs": 0.0,
+    "start_time": "2026-09-24T06:00",
+    "home_timezone": "America/New_York",
+    "include_inspections": true,
+    "log_meta": {
+      "driver_name": "John Doe",
+      "co_driver_name": "",
+      "carrier_name": "John Doe's Transportation",
+      "main_office_address": "Washington, D.C.",
+      "home_terminal_address": "Richmond, VA",
+      "truck_tractor_no": "123",
+      "trailer_no": "456",
+      "shipping_doc_no": "BOL-10001",
+      "shipper_commodity": "ACME Co. — paper products"
+    }
+  },
+  "summary": {
+    "total_miles": 180,
+    "total_driving_hrs": 3.0,
+    "total_on_duty_hrs": 5.5,
+    "start_at": "2026-09-24T06:00:00-04:00",
+    "arrive_at": "2026-09-24T10:15:00-04:00",
+    "end_at": "2026-09-24T11:30:00-04:00",
+    "log_days": 1,
+    "stop_count": 2,
+    "cycle_used_end_hrs": 5.5,
+    "home_timezone": "America/New_York"
+  },
+  "route": {
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -77.436,
+          37.5407
+        ],
+        [
+          -77.436,
+          37.5407
+        ],
+        [
+          -75.1652,
+          39.9526
+        ]
+      ]
+    },
+    "legs": [
+      {
+        "from": "current",
+        "to": "pickup",
+        "distance_mi": 0,
+        "duration_hrs": 0
+      },
+      {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_mi": 180,
+        "duration_hrs": 3
+      }
+    ]
+  },
+  "stops": [
+    {
+      "seq": 1,
+      "type": "pickup",
+      "label": "Richmond, VA",
+      "lat": 37.5407,
+      "lng": -77.436,
+      "mile_marker": 0.0,
+      "arrive_at": "2026-09-24T06:15:00-04:00",
+      "depart_at": "2026-09-24T07:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    },
+    {
+      "seq": 2,
+      "type": "dropoff",
+      "label": "Philadelphia, PA",
+      "lat": 39.9526,
+      "lng": -75.1652,
+      "mile_marker": 180.0,
+      "arrive_at": "2026-09-24T10:15:00-04:00",
+      "depart_at": "2026-09-24T11:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    }
+  ],
+  "daily_logs": [
+    {
+      "day_number": 1,
+      "date": "2026-09-24",
+      "header": {
+        "from": "Richmond, VA",
+        "to": "Philadelphia, PA",
+        "miles_driving_today": 180.0,
+        "total_mileage_today": 180.0,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "OFF",
+          "start_min": 0,
+          "end_min": 360,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "ON",
+          "start_min": 360,
+          "end_min": 375,
+          "note": "Pre-trip inspection",
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "ON",
+          "start_min": 375,
+          "end_min": 435,
+          "note": "Pickup",
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "D",
+          "start_min": 435,
+          "end_min": 615,
+          "note": null,
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "ON",
+          "start_min": 615,
+          "end_min": 675,
+          "note": "Dropoff",
+          "location": "Philadelphia, PA"
+        },
+        {
+          "status": "ON",
+          "start_min": 675,
+          "end_min": 690,
+          "note": "Post-trip inspection",
+          "location": "Philadelphia, PA"
+        },
+        {
+          "status": "OFF",
+          "start_min": 690,
+          "end_min": 1440,
+          "note": null,
+          "location": null
+        }
+      ],
+      "totals": {
+        "OFF": 18.5,
+        "SB": 0.0,
+        "D": 3.0,
+        "ON": 2.5
+      },
+      "remarks": [
+        {
+          "at_min": 360,
+          "location": "Richmond, VA",
+          "note": "Pre-trip inspection"
+        },
+        {
+          "at_min": 375,
+          "location": "Richmond, VA",
+          "note": "Pickup"
+        },
+        {
+          "at_min": 435,
+          "location": "Richmond, VA",
+          "note": null
+        },
+        {
+          "at_min": 615,
+          "location": "Philadelphia, PA",
+          "note": "Dropoff"
+        },
+        {
+          "at_min": 675,
+          "location": "Philadelphia, PA",
+          "note": "Post-trip inspection"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 5.5,
+        "a_last_7": 5.5,
+        "b_available_tomorrow": 64.5,
+        "c_last_5": 5.5,
+        "restart_34_taken": false
+      }
+    }
+  ]
+}

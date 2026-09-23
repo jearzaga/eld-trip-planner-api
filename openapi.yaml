@@ -1,0 +1,607 @@
+openapi: 3.0.3
+info:
+  title: ELD Trip Planner API
+  version: 1.0.0
+paths:
+  /api/geocode/:
+    get:
+      operationId: geocode_search
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Search text, at least 3 characters.
+        required: true
+      tags:
+      - geocode
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeocodeResult'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/health/:
+    get:
+      operationId: health_check
+      tags:
+      - health
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+          description: ''
+        '503':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+          description: ''
+  /api/trips/:
+    post:
+      operationId: trips_create
+      tags:
+      - trips
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '502':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/trips/{trip_id}/:
+    get:
+      operationId: trips_retrieve
+      parameters:
+      - in: path
+        name: trip_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - trips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+components:
+  schemas:
+    DailyLog:
+      type: object
+      properties:
+        day_number:
+          type: integer
+        date:
+          type: string
+        header:
+          $ref: '#/components/schemas/LogHeader'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DutySegment'
+        totals:
+          $ref: '#/components/schemas/DutyTotals'
+        remarks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Remark'
+        recap:
+          $ref: '#/components/schemas/Recap'
+      required:
+      - date
+      - day_number
+      - header
+      - recap
+      - remarks
+      - segments
+      - totals
+    DutySegment:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/DutyStatusEnum'
+        start_min:
+          type: integer
+        end_min:
+          type: integer
+        note:
+          type: string
+          nullable: true
+        location:
+          type: string
+          nullable: true
+      required:
+      - end_min
+      - location
+      - note
+      - start_min
+      - status
+    DutyStatusEnum:
+      enum:
+      - 'OFF'
+      - SB
+      - D
+      - 'ON'
+      type: string
+      description: |-
+        * `OFF` - OFF
+        * `SB` - SB
+        * `D` - D
+        * `ON` - ON
+    DutyTotals:
+      type: object
+      properties:
+        'OFF':
+          type: number
+          format: double
+        SB:
+          type: number
+          format: double
+        D:
+          type: number
+          format: double
+        'ON':
+          type: number
+          format: double
+      required:
+      - D
+      - 'OFF'
+      - 'ON'
+      - SB
+    ErrorDetail:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fields:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      required:
+      - code
+      - fields
+      - message
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorDetail'
+      required:
+      - error
+    GeocodeResult:
+      type: object
+      properties:
+        label:
+          type: string
+        lat:
+          type: number
+          format: double
+        lng:
+          type: number
+          format: double
+      required:
+      - label
+      - lat
+      - lng
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/HealthStatusEnum'
+      required:
+      - status
+    HealthStatusEnum:
+      enum:
+      - ok
+      - unavailable
+      type: string
+      description: |-
+        * `ok` - ok
+        * `unavailable` - unavailable
+    Location:
+      type: object
+      properties:
+        label:
+          type: string
+          maxLength: 200
+        lat:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        lng:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+      required:
+      - label
+      - lat
+      - lng
+    LogHeader:
+      type: object
+      properties:
+        miles_driving_today:
+          type: number
+          format: double
+        total_mileage_today:
+          type: number
+          format: double
+        driver_name:
+          type: string
+        co_driver_name:
+          type: string
+        carrier_name:
+          type: string
+        main_office_address:
+          type: string
+        home_terminal_address:
+          type: string
+        truck_tractor_no:
+          type: string
+        trailer_no:
+          type: string
+        shipping_doc_no:
+          type: string
+        shipper_commodity:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - carrier_name
+      - co_driver_name
+      - driver_name
+      - from
+      - home_terminal_address
+      - main_office_address
+      - miles_driving_today
+      - shipper_commodity
+      - shipping_doc_no
+      - to
+      - total_mileage_today
+      - trailer_no
+      - truck_tractor_no
+    LogMeta:
+      type: object
+      properties:
+        driver_name:
+          type: string
+          maxLength: 200
+        co_driver_name:
+          type: string
+          maxLength: 200
+        carrier_name:
+          type: string
+          maxLength: 200
+        main_office_address:
+          type: string
+          maxLength: 200
+        home_terminal_address:
+          type: string
+          maxLength: 200
+        truck_tractor_no:
+          type: string
+          maxLength: 200
+        trailer_no:
+          type: string
+          maxLength: 200
+        shipping_doc_no:
+          type: string
+          maxLength: 200
+        shipper_commodity:
+          type: string
+          maxLength: 200
+    Recap:
+      type: object
+      properties:
+        on_duty_today:
+          type: number
+          format: double
+        a_last_7:
+          type: number
+          format: double
+        b_available_tomorrow:
+          type: number
+          format: double
+        c_last_5:
+          type: number
+          format: double
+        restart_34_taken:
+          type: boolean
+      required:
+      - a_last_7
+      - b_available_tomorrow
+      - c_last_5
+      - on_duty_today
+      - restart_34_taken
+    Remark:
+      type: object
+      properties:
+        at_min:
+          type: integer
+        location:
+          type: string
+          nullable: true
+        note:
+          type: string
+          nullable: true
+      required:
+      - at_min
+      - location
+      - note
+    Route:
+      type: object
+      properties:
+        geometry:
+          $ref: '#/components/schemas/RouteGeometry'
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteLeg'
+      required:
+      - geometry
+      - legs
+    RouteGeometry:
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+      required:
+      - coordinates
+      - type
+    RouteLeg:
+      type: object
+      properties:
+        distance_mi:
+          type: number
+          format: double
+        duration_hrs:
+          type: number
+          format: double
+        from:
+          type: string
+        to:
+          type: string
+      required:
+      - distance_mi
+      - duration_hrs
+      - from
+      - to
+    Stop:
+      type: object
+      properties:
+        seq:
+          type: integer
+        type:
+          $ref: '#/components/schemas/StopTypeEnum'
+        label:
+          type: string
+        lat:
+          type: number
+          format: double
+        lng:
+          type: number
+          format: double
+        mile_marker:
+          type: number
+          format: double
+        arrive_at:
+          type: string
+        depart_at:
+          type: string
+        duration_min:
+          type: integer
+        status:
+          $ref: '#/components/schemas/DutyStatusEnum'
+      required:
+      - arrive_at
+      - depart_at
+      - duration_min
+      - label
+      - lat
+      - lng
+      - mile_marker
+      - seq
+      - status
+      - type
+    StopTypeEnum:
+      enum:
+      - pickup
+      - fuel
+      - break_30
+      - rest_10
+      - restart_34
+      - dropoff
+      type: string
+      description: |-
+        * `pickup` - pickup
+        * `fuel` - fuel
+        * `break_30` - break_30
+        * `rest_10` - rest_10
+        * `restart_34` - restart_34
+        * `dropoff` - dropoff
+    TripInputs:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/Location'
+        pickup:
+          $ref: '#/components/schemas/Location'
+        dropoff:
+          $ref: '#/components/schemas/Location'
+        cycle_used_hrs:
+          type: number
+          format: double
+        start_time:
+          type: string
+        home_timezone:
+          type: string
+        include_inspections:
+          type: boolean
+        log_meta:
+          $ref: '#/components/schemas/LogMeta'
+      required:
+      - current
+      - cycle_used_hrs
+      - dropoff
+      - home_timezone
+      - include_inspections
+      - log_meta
+      - pickup
+      - start_time
+    TripRequest:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/Location'
+        pickup:
+          $ref: '#/components/schemas/Location'
+        dropoff:
+          $ref: '#/components/schemas/Location'
+        cycle_used_hrs:
+          type: number
+          format: double
+          maximum: 70
+          minimum: 0
+        start_time:
+          type: string
+          nullable: true
+        home_timezone:
+          type: string
+          nullable: true
+        include_inspections:
+          type: boolean
+        log_meta:
+          $ref: '#/components/schemas/LogMeta'
+      required:
+      - current
+      - cycle_used_hrs
+      - dropoff
+      - pickup
+    TripResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        inputs:
+          $ref: '#/components/schemas/TripInputs'
+        summary:
+          $ref: '#/components/schemas/TripSummary'
+        route:
+          $ref: '#/components/schemas/Route'
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop'
+        daily_logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DailyLog'
+      required:
+      - daily_logs
+      - id
+      - inputs
+      - route
+      - stops
+      - summary
+    TripSummary:
+      type: object
+      properties:
+        total_miles:
+          type: number
+          format: double
+        total_driving_hrs:
+          type: number
+          format: double
+        total_on_duty_hrs:
+          type: number
+          format: double
+        start_at:
+          type: string
+        arrive_at:
+          type: string
+        end_at:
+          type: string
+        log_days:
+          type: integer
+        stop_count:
+          type: integer
+        cycle_used_end_hrs:
+          type: number
+          format: double
+        home_timezone:
+          type: string
+      required:
+      - arrive_at
+      - cycle_used_end_hrs
+      - end_at
+      - home_timezone
+      - log_days
+      - start_at
+      - stop_count
+      - total_driving_hrs
+      - total_miles
+      - total_on_duty_hrs

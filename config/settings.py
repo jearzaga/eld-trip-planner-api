@@ -61,12 +61,17 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [],
     "UNAUTHENTICATED_USER": None,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    # "EXCEPTION_HANDLER": "trips.exceptions.api_exception_handler",  # standard error shape (A5-08)
+    "EXCEPTION_HANDLER": "trips.exceptions.api_exception_handler",
 }
 SPECTACULAR_SETTINGS = {
     "TITLE": "ELD Trip Planner API",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "ENUM_NAME_OVERRIDES": {
+        "DutyStatusEnum": ["OFF", "SB", "D", "ON"],
+        "StopTypeEnum": ["pickup", "fuel", "break_30", "rest_10", "restart_34", "dropoff"],
+        "HealthStatusEnum": ["ok", "unavailable"],
+    },
 }
 
 # --- CORS (Vercel prod + previews) ---

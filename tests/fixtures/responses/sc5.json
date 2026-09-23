@@ -1,0 +1,690 @@
+{
+  "id": "000000000000000000000005",
+  "inputs": {
+    "current": {
+      "label": "Richmond, VA",
+      "lat": 37.5407,
+      "lng": -77.436
+    },
+    "pickup": {
+      "label": "Charlotte, NC",
+      "lat": 35.2271,
+      "lng": -80.8431
+    },
+    "dropoff": {
+      "label": "Los Angeles, CA",
+      "lat": 34.0522,
+      "lng": -118.2437
+    },
+    "cycle_used_hrs": 10.0,
+    "start_time": "2026-09-24T06:00",
+    "home_timezone": "America/New_York",
+    "include_inspections": true,
+    "log_meta": {
+      "driver_name": "John Doe",
+      "co_driver_name": "",
+      "carrier_name": "John Doe's Transportation",
+      "main_office_address": "Washington, D.C.",
+      "home_terminal_address": "Richmond, VA",
+      "truck_tractor_no": "123",
+      "trailer_no": "456",
+      "shipping_doc_no": "BOL-10001",
+      "shipper_commodity": "ACME Co. — paper products"
+    }
+  },
+  "summary": {
+    "total_miles": 2800,
+    "total_driving_hrs": 47.0,
+    "total_on_duty_hrs": 50.5,
+    "start_at": "2026-09-24T06:00:00-04:00",
+    "arrive_at": "2026-09-28T00:15:00-04:00",
+    "end_at": "2026-09-28T01:30:00-04:00",
+    "log_days": 5,
+    "stop_count": 10,
+    "cycle_used_end_hrs": 60.5,
+    "home_timezone": "America/New_York"
+  },
+  "route": {
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          -77.436,
+          37.5407
+        ],
+        [
+          -80.8431,
+          35.2271
+        ],
+        [
+          -118.2437,
+          34.0522
+        ]
+      ]
+    },
+    "legs": [
+      {
+        "from": "current",
+        "to": "pickup",
+        "distance_mi": 300,
+        "duration_hrs": 5
+      },
+      {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_mi": 2500,
+        "duration_hrs": 42
+      }
+    ]
+  },
+  "stops": [
+    {
+      "seq": 1,
+      "type": "pickup",
+      "label": "Charlotte, NC",
+      "lat": 35.2271,
+      "lng": -80.8431,
+      "mile_marker": 300.0,
+      "arrive_at": "2026-09-24T11:15:00-04:00",
+      "depart_at": "2026-09-24T12:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    },
+    {
+      "seq": 2,
+      "type": "rest_10",
+      "label": "near Nashville, TN",
+      "lat": 35.05925714285714,
+      "lng": -86.18604285714287,
+      "mile_marker": 657.1,
+      "arrive_at": "2026-09-24T18:15:00-04:00",
+      "depart_at": "2026-09-25T04:15:00-04:00",
+      "duration_min": 600,
+      "status": "SB"
+    },
+    {
+      "seq": 3,
+      "type": "fuel",
+      "label": "near Little Rock, AR",
+      "lat": 34.89840773809524,
+      "lng": -91.3063630952381,
+      "mile_marker": 999.4,
+      "arrive_at": "2026-09-25T10:00:00-04:00",
+      "depart_at": "2026-09-25T10:30:00-04:00",
+      "duration_min": 30,
+      "status": "ON"
+    },
+    {
+      "seq": 4,
+      "type": "rest_10",
+      "label": "near Tulsa, OK",
+      "lat": 34.75154523809524,
+      "lng": -95.9814380952381,
+      "mile_marker": 1311.9,
+      "arrive_at": "2026-09-25T15:45:00-04:00",
+      "depart_at": "2026-09-26T01:45:00-04:00",
+      "duration_min": 600,
+      "status": "SB"
+    },
+    {
+      "seq": 5,
+      "type": "break_30",
+      "label": "near Amarillo, TX",
+      "lat": 34.52775476190476,
+      "lng": -103.1053619047619,
+      "mile_marker": 1788.1,
+      "arrive_at": "2026-09-26T09:45:00-04:00",
+      "depart_at": "2026-09-26T10:15:00-04:00",
+      "duration_min": 30,
+      "status": "OFF"
+    },
+    {
+      "seq": 6,
+      "type": "rest_10",
+      "label": "near Albuquerque, NM",
+      "lat": 34.44383333333333,
+      "lng": -105.77683333333334,
+      "mile_marker": 1966.7,
+      "arrive_at": "2026-09-26T13:15:00-04:00",
+      "depart_at": "2026-09-26T23:15:00-04:00",
+      "duration_min": 600,
+      "status": "SB"
+    },
+    {
+      "seq": 7,
+      "type": "fuel",
+      "label": "near Albuquerque, NM",
+      "lat": 34.42984642857143,
+      "lng": -106.22207857142858,
+      "mile_marker": 1996.4,
+      "arrive_at": "2026-09-26T23:45:00-04:00",
+      "depart_at": "2026-09-27T00:15:00-04:00",
+      "duration_min": 30,
+      "status": "ON"
+    },
+    {
+      "seq": 8,
+      "type": "break_30",
+      "label": "near Kingman, AZ",
+      "lat": 34.20605595238095,
+      "lng": -113.34600238095238,
+      "mile_marker": 2472.6,
+      "arrive_at": "2026-09-27T08:15:00-04:00",
+      "depart_at": "2026-09-27T08:45:00-04:00",
+      "duration_min": 30,
+      "status": "OFF"
+    },
+    {
+      "seq": 9,
+      "type": "rest_10",
+      "label": "near Barstow, CA",
+      "lat": 34.13612142857143,
+      "lng": -115.57222857142858,
+      "mile_marker": 2621.4,
+      "arrive_at": "2026-09-27T11:15:00-04:00",
+      "depart_at": "2026-09-27T21:15:00-04:00",
+      "duration_min": 600,
+      "status": "SB"
+    },
+    {
+      "seq": 10,
+      "type": "dropoff",
+      "label": "Los Angeles, CA",
+      "lat": 34.0522,
+      "lng": -118.2437,
+      "mile_marker": 2800.0,
+      "arrive_at": "2026-09-28T00:15:00-04:00",
+      "depart_at": "2026-09-28T01:15:00-04:00",
+      "duration_min": 60,
+      "status": "ON"
+    }
+  ],
+  "daily_logs": [
+    {
+      "day_number": 1,
+      "date": "2026-09-24",
+      "header": {
+        "from": "Richmond, VA",
+        "to": "near Nashville, TN",
+        "miles_driving_today": 657.1,
+        "total_mileage_today": 657.1,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "OFF",
+          "start_min": 0,
+          "end_min": 360,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "ON",
+          "start_min": 360,
+          "end_min": 375,
+          "note": "Pre-trip inspection",
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "D",
+          "start_min": 375,
+          "end_min": 675,
+          "note": null,
+          "location": "Richmond, VA"
+        },
+        {
+          "status": "ON",
+          "start_min": 675,
+          "end_min": 735,
+          "note": "Pickup",
+          "location": "Charlotte, NC"
+        },
+        {
+          "status": "D",
+          "start_min": 735,
+          "end_min": 1095,
+          "note": null,
+          "location": "Charlotte, NC"
+        },
+        {
+          "status": "SB",
+          "start_min": 1095,
+          "end_min": 1440,
+          "note": "10-hour reset",
+          "location": "near Nashville, TN"
+        }
+      ],
+      "totals": {
+        "OFF": 6.0,
+        "SB": 5.75,
+        "D": 11.0,
+        "ON": 1.25
+      },
+      "remarks": [
+        {
+          "at_min": 360,
+          "location": "Richmond, VA",
+          "note": "Pre-trip inspection"
+        },
+        {
+          "at_min": 375,
+          "location": "Richmond, VA",
+          "note": null
+        },
+        {
+          "at_min": 675,
+          "location": "Charlotte, NC",
+          "note": "Pickup"
+        },
+        {
+          "at_min": 735,
+          "location": "Charlotte, NC",
+          "note": null
+        },
+        {
+          "at_min": 1095,
+          "location": "near Nashville, TN",
+          "note": "10-hour reset"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 12.25,
+        "a_last_7": 22.25,
+        "b_available_tomorrow": 47.75,
+        "c_last_5": 22.25,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 2,
+      "date": "2026-09-25",
+      "header": {
+        "from": "near Nashville, TN",
+        "to": "near Tulsa, OK",
+        "miles_driving_today": 654.8,
+        "total_mileage_today": 654.8,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "SB",
+          "start_min": 0,
+          "end_min": 255,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "D",
+          "start_min": 255,
+          "end_min": 600,
+          "note": null,
+          "location": "near Nashville, TN"
+        },
+        {
+          "status": "ON",
+          "start_min": 600,
+          "end_min": 630,
+          "note": "Fuel",
+          "location": "near Little Rock, AR"
+        },
+        {
+          "status": "D",
+          "start_min": 630,
+          "end_min": 945,
+          "note": null,
+          "location": "near Little Rock, AR"
+        },
+        {
+          "status": "SB",
+          "start_min": 945,
+          "end_min": 1440,
+          "note": "10-hour reset",
+          "location": "near Tulsa, OK"
+        }
+      ],
+      "totals": {
+        "OFF": 0.0,
+        "SB": 12.5,
+        "D": 11.0,
+        "ON": 0.5
+      },
+      "remarks": [
+        {
+          "at_min": 255,
+          "location": "near Nashville, TN",
+          "note": null
+        },
+        {
+          "at_min": 600,
+          "location": "near Little Rock, AR",
+          "note": "Fuel"
+        },
+        {
+          "at_min": 630,
+          "location": "near Little Rock, AR",
+          "note": null
+        },
+        {
+          "at_min": 945,
+          "location": "near Tulsa, OK",
+          "note": "10-hour reset"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 11.5,
+        "a_last_7": 33.75,
+        "b_available_tomorrow": 36.25,
+        "c_last_5": 33.75,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 3,
+      "date": "2026-09-26",
+      "header": {
+        "from": "near Tulsa, OK",
+        "to": "near Albuquerque, NM",
+        "miles_driving_today": 684.5,
+        "total_mileage_today": 684.5,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "SB",
+          "start_min": 0,
+          "end_min": 105,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "D",
+          "start_min": 105,
+          "end_min": 585,
+          "note": null,
+          "location": "near Tulsa, OK"
+        },
+        {
+          "status": "OFF",
+          "start_min": 585,
+          "end_min": 615,
+          "note": "30-minute break",
+          "location": "near Amarillo, TX"
+        },
+        {
+          "status": "D",
+          "start_min": 615,
+          "end_min": 795,
+          "note": null,
+          "location": "near Amarillo, TX"
+        },
+        {
+          "status": "SB",
+          "start_min": 795,
+          "end_min": 1395,
+          "note": "10-hour reset",
+          "location": "near Albuquerque, NM"
+        },
+        {
+          "status": "D",
+          "start_min": 1395,
+          "end_min": 1425,
+          "note": null,
+          "location": "near Albuquerque, NM"
+        },
+        {
+          "status": "ON",
+          "start_min": 1425,
+          "end_min": 1440,
+          "note": "Fuel",
+          "location": "near Albuquerque, NM"
+        }
+      ],
+      "totals": {
+        "OFF": 0.5,
+        "SB": 11.75,
+        "D": 11.5,
+        "ON": 0.25
+      },
+      "remarks": [
+        {
+          "at_min": 105,
+          "location": "near Tulsa, OK",
+          "note": null
+        },
+        {
+          "at_min": 585,
+          "location": "near Amarillo, TX",
+          "note": "30-minute break"
+        },
+        {
+          "at_min": 615,
+          "location": "near Amarillo, TX",
+          "note": null
+        },
+        {
+          "at_min": 795,
+          "location": "near Albuquerque, NM",
+          "note": "10-hour reset"
+        },
+        {
+          "at_min": 1395,
+          "location": "near Albuquerque, NM",
+          "note": null
+        },
+        {
+          "at_min": 1425,
+          "location": "near Albuquerque, NM",
+          "note": "Fuel"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 11.75,
+        "a_last_7": 45.5,
+        "b_available_tomorrow": 24.5,
+        "c_last_5": 45.5,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 4,
+      "date": "2026-09-27",
+      "header": {
+        "from": "near Albuquerque, NM",
+        "to": "near Barstow, CA",
+        "miles_driving_today": 788.7,
+        "total_mileage_today": 788.7,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "ON",
+          "start_min": 0,
+          "end_min": 15,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "D",
+          "start_min": 15,
+          "end_min": 495,
+          "note": null,
+          "location": "near Albuquerque, NM"
+        },
+        {
+          "status": "OFF",
+          "start_min": 495,
+          "end_min": 525,
+          "note": "30-minute break",
+          "location": "near Kingman, AZ"
+        },
+        {
+          "status": "D",
+          "start_min": 525,
+          "end_min": 675,
+          "note": null,
+          "location": "near Kingman, AZ"
+        },
+        {
+          "status": "SB",
+          "start_min": 675,
+          "end_min": 1275,
+          "note": "10-hour reset",
+          "location": "near Barstow, CA"
+        },
+        {
+          "status": "D",
+          "start_min": 1275,
+          "end_min": 1440,
+          "note": null,
+          "location": "near Barstow, CA"
+        }
+      ],
+      "totals": {
+        "OFF": 0.5,
+        "SB": 10.0,
+        "D": 13.25,
+        "ON": 0.25
+      },
+      "remarks": [
+        {
+          "at_min": 15,
+          "location": "near Albuquerque, NM",
+          "note": null
+        },
+        {
+          "at_min": 495,
+          "location": "near Kingman, AZ",
+          "note": "30-minute break"
+        },
+        {
+          "at_min": 525,
+          "location": "near Kingman, AZ",
+          "note": null
+        },
+        {
+          "at_min": 675,
+          "location": "near Barstow, CA",
+          "note": "10-hour reset"
+        },
+        {
+          "at_min": 1275,
+          "location": "near Barstow, CA",
+          "note": null
+        }
+      ],
+      "recap": {
+        "on_duty_today": 13.5,
+        "a_last_7": 59.0,
+        "b_available_tomorrow": 11.0,
+        "c_last_5": 59.0,
+        "restart_34_taken": false
+      }
+    },
+    {
+      "day_number": 5,
+      "date": "2026-09-28",
+      "header": {
+        "from": "Los Angeles, CA",
+        "to": "Los Angeles, CA",
+        "miles_driving_today": 14.9,
+        "total_mileage_today": 14.9,
+        "driver_name": "John Doe",
+        "co_driver_name": "",
+        "carrier_name": "John Doe's Transportation",
+        "main_office_address": "Washington, D.C.",
+        "home_terminal_address": "Richmond, VA",
+        "truck_tractor_no": "123",
+        "trailer_no": "456",
+        "shipping_doc_no": "BOL-10001",
+        "shipper_commodity": "ACME Co. — paper products"
+      },
+      "segments": [
+        {
+          "status": "D",
+          "start_min": 0,
+          "end_min": 15,
+          "note": null,
+          "location": null
+        },
+        {
+          "status": "ON",
+          "start_min": 15,
+          "end_min": 75,
+          "note": "Dropoff",
+          "location": "Los Angeles, CA"
+        },
+        {
+          "status": "ON",
+          "start_min": 75,
+          "end_min": 90,
+          "note": "Post-trip inspection",
+          "location": "Los Angeles, CA"
+        },
+        {
+          "status": "OFF",
+          "start_min": 90,
+          "end_min": 1440,
+          "note": null,
+          "location": null
+        }
+      ],
+      "totals": {
+        "OFF": 22.5,
+        "SB": 0.0,
+        "D": 0.25,
+        "ON": 1.25
+      },
+      "remarks": [
+        {
+          "at_min": 15,
+          "location": "Los Angeles, CA",
+          "note": "Dropoff"
+        },
+        {
+          "at_min": 75,
+          "location": "Los Angeles, CA",
+          "note": "Post-trip inspection"
+        }
+      ],
+      "recap": {
+        "on_duty_today": 1.5,
+        "a_last_7": 60.5,
+        "b_available_tomorrow": 9.5,
+        "c_last_5": 60.5,
+        "restart_34_taken": false
+      }
+    }
+  ]
+}

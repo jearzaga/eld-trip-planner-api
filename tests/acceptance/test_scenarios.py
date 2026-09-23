@@ -41,7 +41,6 @@ def duty_status_per_minute(trip_plan):
 
 
 # SC-1
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_short_day_trip_fits_on_one_log_sheet(api_client):
     trip_plan = plan_trip(api_client, SHORT_DAY_TRIP)
@@ -52,7 +51,6 @@ def test_short_day_trip_fits_on_one_log_sheet(api_client):
 
 
 # SC-2 · AC-33
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_two_day_trip_matches_business_rules_worked_example(api_client):
     trip_plan = plan_trip(api_client, TWO_DAY_WORKED_EXAMPLE_TRIP)
@@ -63,7 +61,6 @@ def test_two_day_trip_matches_business_rules_worked_example(api_client):
 
 
 # SC-3 · AC-31
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_trip_reaching_the_70_hour_cycle_takes_a_34_hour_restart(api_client):
     trip_plan = plan_trip(api_client, CYCLE_LIMITED_TRIP)
@@ -73,7 +70,6 @@ def test_trip_reaching_the_70_hour_cycle_takes_a_34_hour_restart(api_client):
 
 
 # SC-4 · AC-31
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_trip_with_a_full_cycle_starts_with_a_34_hour_restart(api_client):
     trip_plan = plan_trip(api_client, CYCLE_FULL_TRIP)
@@ -84,7 +80,6 @@ def test_trip_with_a_full_cycle_starts_with_a_34_hour_restart(api_client):
 
 
 # SC-5 · AC-32
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_cross_country_trip_adds_fuel_rest_and_break_stops(api_client):
     trip_plan = plan_trip(api_client, CROSS_COUNTRY_TRIP)
@@ -97,7 +92,6 @@ def test_cross_country_trip_adds_fuel_rest_and_break_stops(api_client):
 
 
 # SC-6
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_unroutable_trip_returns_422_route_not_found(api_client):
     expected = UNROUTABLE_TRIP.expected
@@ -107,7 +101,6 @@ def test_unroutable_trip_returns_422_route_not_found(api_client):
 
 
 # SC-7
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 def test_pickup_at_current_location_happens_right_after_pre_trip(api_client):
     trip_plan = plan_trip(api_client, PICKUP_AT_CURRENT_LOCATION_TRIP)
@@ -120,7 +113,6 @@ def test_pickup_at_current_location_happens_right_after_pre_trip(api_client):
 
 
 # AC-30
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 @pytest.mark.parametrize("scenario", ROUTABLE_SCENARIOS, ids=lambda scenario: scenario.spec_id)
 def test_planned_trip_never_violates_hours_of_service_rules(api_client, scenario):
@@ -167,7 +159,6 @@ def test_planned_trip_never_violates_hours_of_service_rules(api_client, scenario
 
 
 # AC-35
-@pytest.mark.skip(reason="enable in A5-01")
 @pytest.mark.django_db
 @pytest.mark.parametrize("scenario", ROUTABLE_SCENARIOS, ids=lambda scenario: scenario.spec_id)
 def test_logs_use_quarter_hours_in_the_home_timezone(api_client, scenario):
