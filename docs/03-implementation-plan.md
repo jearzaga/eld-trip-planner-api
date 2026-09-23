@@ -22,7 +22,7 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 ## What's left (next up)
 
-_Updated 2026-09-23 after A0-08 (Render deploy) landed._
+_Updated 2026-09-23 after A0-08 (Render deploy) landed and CI was deferred._
 
 1. **A1 ✅ (merged, PR #2).** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`);
    the AC-34 John Doe golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
@@ -30,16 +30,16 @@ _Updated 2026-09-23 after A0-08 (Render deploy) landed._
 2. **W0 → W1 in the web repo.** W0-02 (project setup) is ✅; W0-03…W0-06 remain. W1 (Playwright harness + `fixme` specs) is unblocked
    on the API side: health endpoint and fake provider are done.
 3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). Blocked only on **W1** now that A1 is ✅.
-4. **A0-08 ✅.** Render service configured in the dashboard, health endpoint live at
-   `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. A0 stays 🟨 only because **A0-07 CI** is still
-   ⛔, waiting on the `MONGODB_URI` GitHub Actions secret — that doesn't hold up A1, W1 or feature work.
+4. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
+   `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. **A0-07 CI is ⏭️ deferred** (see *Decision log*):
+   run the checks locally before each PR until it is re-added.
 5. **A10, A11** at the end (production deploy, README / Loom).
 
 ## Progress overview (API)
 
 | Phase | Name | Est. | Status | Gate |
 |---|---|---|---|---|
-| A0 | Repo & tooling foundation | 0.5 d | 🟨 | Health endpoint green locally, on Render, in CI |
+| A0 | Repo & tooling foundation | 0.5 d | ✅ | Health endpoint green locally and on Render (CI deferred) |
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
 | A2 | HOS engine (pure Python) | 1 d | ⬜ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
@@ -60,12 +60,12 @@ _Updated 2026-09-23 after A0-08 (Render deploy) landed._
 | A0-04 | `GET /api/health/` (pings Mongo) | `tests/api/test_health.py` | ✅ |
 | A0-05 | `GEO_PROVIDER` factory with a stub `FakeGeoProvider` (straight-line route); `MONGODB_DB` override for test/E2E | `tests/unit/geo/test_provider_factory.py` | ✅ |
 | A0-06 | CORS from env (`CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES`) | `tests/api/test_cors.py` (localhost:5173 allowed, other origin not) | ✅ |
-| A0-07 | CI: ruff + pytest against Atlas (`MONGODB_URI` repo secret, `MONGODB_DB=eld_ci`); `requirements.txt` export + drift check | push → green | ⛔ |
+| A0-07 | CI: ruff + pytest against Atlas (`MONGODB_URI` repo secret, `MONGODB_DB=eld_ci`); `requirements.txt` export + drift check | push → green | ⏭️ |
 | A0-08 | Render Web Service (dashboard config, reuses the A0-02 Atlas cluster); first Render deploy of health endpoint (`GEO_PROVIDER=fake` for now) | `curl https://<api>.onrender.com/api/health/` → ok | ✅ |
 
-**Gate:** health green locally, in CI and on Render. → unblocks **W1**.
+**Gate:** health green locally and on Render (CI deferred, see *Decision log*). → unblocks **W1**.
 
-> A0-07 is still ⛔ (see *Blockers* #1). A0-08 is done: the Render service is configured in the dashboard and
+> A0-07 is ⏭️ deferred and `.github/workflows/ci.yml` was removed (see *Decision log*). A0-08 is done: the Render service is configured in the dashboard and
 > `https://eld-trip-planner-api-ozav.onrender.com/api/health/` returns `200 {"status":"ok"}` (verified 2026-09-23).
 > W1 only needs A0-04 + A0-05 (health + fake provider) locally, so it can start now.
 
@@ -178,11 +178,12 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | 2026-09-23 | Cycle-used treated as non-rolling during trip (conservative) | A-04 |
 | 2026-09-23 | MongoDB Atlas M0 in every environment (dev, tests, E2E, CI, Render); no local MongoDB or Docker. One DB name per environment via `MONGODB_DB` | 06 §6 |
 | 2026-09-23 | **No `render.yaml`.** The Render service was created in the dashboard, so a Blueprint file would be ignored and could drift from the real config. Settings are documented in `02-architecture.md` §7 instead | 02 §7 |
+| 2026-09-23 | **CI deferred (A0-07, and web W0-05/W1-07).** Removed `.github/workflows/ci.yml` from both repos. Every run would connect to the shared Atlas cluster, and CI adds little while one person builds the foundation. Until it returns, run the checks locally before each PR (`CLAUDE.md` definition of done). When re-added, use a throwaway MongoDB service container (`mongo:8`, `MONGODB_URI=mongodb://localhost:27017`) instead of an Atlas secret, then switch Render Auto-Deploy to *After CI checks pass* | 04 §7 |
 
 ## Blockers / open questions
 
 | # | Question | Status |
 |---|---|---|
-| 1 | A0-07: add the `MONGODB_URI` GitHub Actions secret to this repo, then push to get the first green CI run (`.github/workflows/ci.yml` already exists) | ⛔ waiting on secret |
+| 1 | A0-07: add the `MONGODB_URI` GitHub Actions secret to this repo, then push to get the first green CI run (`.github/workflows/ci.yml` already exists) | ⏭️ deferred 2026-09-23 — CI removed for now (see *Decision log*) |
 | 2 | A0-08: create a Render account and deploy the health endpoint | ✅ resolved 2026-09-23 — Render deployed |
 | 3 | The Render build command in `02-architecture.md` §7 runs `manage.py ensure_indexes`, which A4-07 creates. For A0-08, drop that build step until A4-07, or add a no-op command now? | ✅ resolved — dropped `ensure_indexes` from the build command until A4-07 adds it back |
