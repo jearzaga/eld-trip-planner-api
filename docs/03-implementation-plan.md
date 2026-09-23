@@ -22,13 +22,14 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 
 ## What's left (next up)
 
-_Updated 2026-09-23 after A1 (acceptance tests, skipped) was written._
+_Updated 2026-09-23 after PR #2 (A1) merged._
 
-1. **A1 ✅.** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`); the AC-34 John Doe
-   golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
-2. **W0 → W1 in the web repo.** W0-02 (project setup) is in progress. W1 (Playwright harness + `fixme` specs) is unblocked
+1. **A1 ✅ (merged, PR #2).** SC-1…SC-7 + AC-30…AC-35 acceptance tests are collected and skipped (`enable in A5-01`);
+   the AC-34 John Doe golden is a skipped placeholder in `tests/unit/hos/test_log_builder_golden.py` (`enable in A3-04`).
+   No API work is unblocked until W1 lands.
+2. **W0 → W1 in the web repo.** W0-02 (project setup) is ✅; W0-03…W0-06 remain. W1 (Playwright harness + `fixme` specs) is unblocked
    on the API side: health endpoint and fake provider are done.
-3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). Blocked until **W1 and A1 are ✅**.
+3. **A2 → A3 → A4 → A5** (HOS engine, log builder, geo services, API + contract). Blocked only on **W1** now that A1 is ✅.
 4. **Blocked A0 tasks** (see *Blockers*): A0-07 CI and A0-08 Render. A0 stays 🟨 until both are done, but that doesn't
    hold up A1, W1 or feature work.
 5. **A10, A11** at the end (production deploy, README / Loom).
