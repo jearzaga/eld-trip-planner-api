@@ -145,8 +145,8 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | A5-04 | `services.plan_trip()` orchestration | `test_services.py` | ✅ |
 | A5-05 | `POST /api/trips/` → 201 per contract | `test_trips_create.py` | ⬜ |
 | A5-06 | `GET /api/trips/{id}/`, 404 shape | `test_trips_retrieve.py` | ⬜ |
-| A5-07 | `GET /api/geocode/?q=` | `test_geocode_api.py` | ⬜ |
-| A5-08 | Error mapping (400 / 422 / 502) in the standard error shape | `test_trips_errors.py` | ⬜ |
+| A5-07 | `GET /api/geocode/?q=` | `test_geocode_api.py` | ✅ |
+| A5-08 | Error mapping (400 / 422 / 502) in the standard error shape | `test_trips_errors.py` | ✅ |
 | A5-09 | drf-spectacular + committed `openapi.yaml` + drift check | `tests/contract/test_openapi_fresh.py` | ⬜ |
 | A5-10 | `dump_scenarios` → `tests/fixtures/responses/sc1…sc7.json` + drift check | `tests/contract/test_fixtures_fresh.py` | ⬜ |
 | A5-11 | Notify web repo: run `npm run sync-contract` there and enable `api-contract.spec.ts` (W-side task W5-01) | web Playwright red → green | ⬜ |
