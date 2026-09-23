@@ -333,7 +333,7 @@ services:
     runtime: python
     plan: free                       # upgrade to starter during grading week if cold starts are a concern
     region: virginia                 # same region as the Atlas cluster (AWS us-east-1)
-    buildCommand: pip install -r requirements.txt && python manage.py ensure_indexes
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 90
     healthCheckPath: /api/health/
     envVars:
@@ -341,13 +341,15 @@ services:
       - { key: DJANGO_SECRET_KEY, generateValue: true }
       - { key: DJANGO_DEBUG, value: "0" }
       - { key: ALLOWED_HOSTS, value: ".onrender.com" }
-      - { key: GEO_PROVIDER, value: live }
+      - { key: GEO_PROVIDER, value: fake }   # switch to live in A10
       - { key: MONGODB_URI, sync: false }
       - { key: MONGODB_DB, value: eld }
       - { key: ORS_API_KEY, sync: false }
       - { key: CORS_ALLOWED_ORIGINS, sync: false }          # https://<app>.vercel.app
       - { key: CORS_ALLOWED_ORIGIN_REGEXES, sync: false }   # ^https://eld-trip-planner-web-.*\.vercel\.app$ (previews)
 ```
+
+A4-07 adds `python manage.py ensure_indexes` back into `buildCommand` once that command exists.
 
 - `requirements.txt` is exported from `uv.lock` (`uv export --no-dev --no-hashes`); CI fails if it drifts.
 - `gunicorn` is a runtime dependency. No static files (API only), so no WhiteNoise needed.
