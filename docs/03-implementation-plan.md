@@ -125,7 +125,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A4-02 | `route_math.py`: haversine, cumulative distance, `point_at_mile` | `test_route_math.py` | ✅ |
 | A4-03 | `ors.py` `driving-hgv` → legs (mi, h) + GeoJSON; errors → `RouteNotFound` / `ProviderUnavailable` | `test_ors.py` (respx) | ✅ |
 | A4-04 | `photon.py` search + reverse → "City, ST" | `test_photon.py` (respx) | ✅ |
-| A4-05 | `fake.py` full scenario fixtures SC-1…SC-7 (SC-6 raises) + straight-line fallback | `test_fake_provider.py` | ⬜ |
+| A4-05 | `fake.py` full scenario fixtures SC-1…SC-7 (SC-6 raises) + straight-line fallback | `test_fake_provider.py` | ✅ |
 | A4-06 | `timezone.py` | `test_timezone.py` | ✅ |
 | A4-07 | Mongo caches with TTL + `ensure_indexes` command | `test_cache.py` | ⬜ |
 

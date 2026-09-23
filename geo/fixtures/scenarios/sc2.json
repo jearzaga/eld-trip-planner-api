@@ -1,0 +1,9 @@
+{
+  "spec_id": "SC-2",
+  "name": "Two-day worked example",
+  "points": [[37.5407, -77.4360], [39.2904, -76.6122], [39.0997, -94.5786]],
+  "legs": [
+    {"distance_mi": 120, "duration_h": 2},
+    {"distance_mi": 1080, "duration_h": 18}
+  ]
+}
