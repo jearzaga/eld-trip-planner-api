@@ -200,6 +200,10 @@ class GeocodeResultSerializer(serializers.Serializer):
     lng = serializers.FloatField()
 
 
+class HealthResponseSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(choices=["ok", "unavailable"])
+
+
 class ErrorDetailSerializer(serializers.Serializer):
     code = serializers.CharField()
     message = serializers.CharField()

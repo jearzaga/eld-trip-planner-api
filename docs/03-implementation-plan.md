@@ -139,12 +139,12 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 
 | ID | Task | Test first | Status |
 |---|---|---|---|
-| A5-01 | Enable acceptance tests | `pytest tests/acceptance` → red | ⬜ |
+| A5-01 | Enable acceptance tests | `pytest tests/acceptance` → red | ✅ |
 | A5-02 | Models: `Trip` + embedded `Location`, `LogMeta`, `Stop`, `DailyLog`, `DutySegment`, `Remark` | `tests/api/test_models.py` round-trip | ✅ |
 | A5-03 | Request serializer + validation | `test_trips_validation.py` | ✅ |
 | A5-04 | `services.plan_trip()` orchestration | `test_services.py` | ✅ |
-| A5-05 | `POST /api/trips/` → 201 per contract | `test_trips_create.py` | ⬜ |
-| A5-06 | `GET /api/trips/{id}/`, 404 shape | `test_trips_retrieve.py` | ⬜ |
+| A5-05 | `POST /api/trips/` → 201 per contract | `test_trips_create.py` | ✅ |
+| A5-06 | `GET /api/trips/{id}/`, 404 shape | `test_trips_retrieve.py` | ✅ |
 | A5-07 | `GET /api/geocode/?q=` | `test_geocode_api.py` | ✅ |
 | A5-08 | Error mapping (400 / 422 / 502) in the standard error shape | `test_trips_errors.py` | ✅ |
 | A5-09 | drf-spectacular + committed `openapi.yaml` + drift check | `tests/contract/test_openapi_fresh.py` | ⬜ |
