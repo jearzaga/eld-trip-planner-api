@@ -95,7 +95,7 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 | A2-10 | Edge cases: zero-mile leg (SC-7), inspections off | `test_engine_edges.py` | ✅ |
 | A2-11 | **Golden** SC-2 exact segments = business rules §8 | `test_engine_worked_example.py` | ⬜ |
 | A2-12 | **Property tests** (Hypothesis) — invariants from architecture §4.1 | `test_engine_invariants.py` | ⬜ |
-| A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ⬜ |
+| A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ✅ |
 | A2-14 | Purity guard | `test_purity.py` | ✅ |
 
 **Gate:** `pytest tests/unit/hos` green; `hos/` coverage ≥ 95 %.
