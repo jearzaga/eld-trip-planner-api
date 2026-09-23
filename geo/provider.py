@@ -37,10 +37,36 @@ class GeoProvider(Protocol):
     def reverse(self, point: LatLng) -> str: ...
 
 
+class LiveGeoProvider:
+    def __init__(self, router, geocoder):
+        self.router = router
+        self.geocoder = geocoder
+
+    def route(self, points: list[LatLng]) -> list[RouteLeg]:
+        return self.router.route(points)
+
+    def geocode(self, query: str) -> list[Place]:
+        return self.geocoder.geocode(query)
+
+    def reverse(self, point: LatLng) -> str:
+        return self.geocoder.reverse(point)
+
+
 def get_provider(name: str | None = None) -> GeoProvider:
     name = name or settings.GEO_PROVIDER
     if name == "fake":
         from geo.fake import FakeGeoProvider
 
         return FakeGeoProvider()
+    if name == "live":
+        from django.db import connection
+
+        from geo.cache import CachedGeoProvider, MongoCacheRepository
+        from geo.ors import OrsRouter
+        from geo.photon import PhotonGeocoder
+
+        return CachedGeoProvider(
+            LiveGeoProvider(OrsRouter(settings.ORS_API_KEY), PhotonGeocoder(settings.PHOTON_URL)),
+            MongoCacheRepository(connection.database),
+        )
     raise ValueError(f"Unknown GEO_PROVIDER: {name!r}")

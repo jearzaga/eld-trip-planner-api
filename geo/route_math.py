@@ -1,4 +1,5 @@
 from bisect import bisect_right
+from itertools import pairwise
 from math import asin, cos, radians, sin, sqrt
 
 from geo.provider import LatLng, LngLat
@@ -19,7 +20,7 @@ def _as_latlng(vertex: LngLat) -> LatLng:
 
 def cumulative_miles(geometry: list[LngLat]) -> list[float]:
     running = [0.0]
-    for previous, current in zip(geometry, geometry[1:], strict=False):
+    for previous, current in pairwise(geometry):
         running.append(running[-1] + haversine_mi(_as_latlng(previous), _as_latlng(current)))
     return running
 
