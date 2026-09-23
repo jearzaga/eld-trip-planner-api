@@ -43,12 +43,16 @@ W1 needs A0's `/api/health/` and the fake-provider switch so Playwright can boot
 | A0-02 | MongoDB Atlas M0 cluster + DB user + network access `0.0.0.0/0`; `MONGODB_URI` in `.env` (no local MongoDB / Docker) | Atlas ping via `manage.py shell` (`06-project-setup.md` §6) | ✅ |
 | A0-03 | Per `06-project-setup.md`: venv (`uv init`); deps: Django 5.2, DRF, `django-mongodb-backend>=5.2.1,<5.3`, django-cors-headers, httpx, timezonefinder, python-dotenv, gunicorn, drf-spectacular; dev: pytest, pytest-django, pytest-cov, hypothesis, respx, ruff. Env-driven `config/settings.py`; packages `hos`, `geo`, app `trips` | `uv run pytest` collects without error | ✅ |
 | A0-04 | `GET /api/health/` (pings Mongo) | `tests/api/test_health.py` | ✅ |
-| A0-05 | `GEO_PROVIDER` factory with a stub `FakeGeoProvider` (straight-line route); `MONGODB_DB` override for test/E2E | `tests/unit/geo/test_provider_factory.py` | ⬜ |
-| A0-06 | CORS from env (`CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES`) | `tests/api/test_cors.py` (localhost:5173 allowed, other origin not) | ⬜ |
+| A0-05 | `GEO_PROVIDER` factory with a stub `FakeGeoProvider` (straight-line route); `MONGODB_DB` override for test/E2E | `tests/unit/geo/test_provider_factory.py` | ✅ |
+| A0-06 | CORS from env (`CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES`) | `tests/api/test_cors.py` (localhost:5173 allowed, other origin not) | ✅ |
 | A0-07 | CI: ruff + pytest against Atlas (`MONGODB_URI` repo secret, `MONGODB_DB=eld_ci`); `requirements.txt` export + drift check | push → green | ⬜ |
 | A0-08 | `render.yaml` (reuses the A0-02 Atlas cluster); first Render deploy of health endpoint (`GEO_PROVIDER=fake` for now) | `curl https://<api>.onrender.com/api/health/` → ok | ⬜ |
 
 **Gate:** health green locally, in CI and on Render. → unblocks **W1**.
+
+> A0-07 (CI) and A0-08 (Render) are on hold: A0-07 needs the `MONGODB_URI` GitHub Actions secret (the workflow file
+> already exists), and A0-08 waits for a Render account. W1 only needs A0-04 + A0-05 (health + fake provider) locally,
+> so it can start now. Before deploying, decide on `render.yaml`'s `ensure_indexes` build step (the command doesn't exist yet).
 
 ## A1 — Acceptance tests (outer loop, written up front)
 
