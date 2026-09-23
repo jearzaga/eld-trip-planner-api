@@ -68,3 +68,16 @@ def test_recap_resets_after_a_34_hour_restart():
     assert restart_day.recap.a_last_7 < 10.0
     assert daily_logs[-1].recap.a_last_7 == 1.0
     assert daily_logs[-1].recap.b_available_tomorrow == 69.0
+
+
+# R-04: a 34-hr restart that is still the last segment in the timeline still counts
+def test_recap_detects_a_restart_that_ends_the_timeline():
+    timeline = _timeline(
+        Segment(DutyStatus.ON, 0, 60, mile_marker=0.0),
+        Segment(DutyStatus.OFF, 60, 2100, mile_marker=0.0),  # 34-hr restart (2040 min)
+    )
+    daily_logs = build_daily_logs(
+        timeline, start_utc=START_UTC, home_tz=HOME_TZ, cycle_used_min=65 * 60
+    )
+
+    assert any(log.recap.restart_34_taken for log in daily_logs)

@@ -159,9 +159,6 @@ def _raw_pieces(timeline: Timeline, start_utc: datetime, tz: ZoneInfo) -> list[_
 
 
 def _split_at_midnights(piece: _Piece) -> list[_Piece]:
-    if piece.start_dt == piece.end_dt:
-        return []
-
     total_duration = (piece.end_dt - piece.start_dt).total_seconds() / 60
     total_mile_delta = piece.mile_end - piece.mile_start
 
