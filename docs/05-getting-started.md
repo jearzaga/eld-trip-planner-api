@@ -25,7 +25,9 @@ git add . && git commit -m "docs: A0-01 business rules, architecture, plan"
 Follow **`06-project-setup.md`**. It covers the virtual environment (uv or venv + pip), Django + DRF + MongoDB install,
 settings, the MongoDB Atlas cluster, test config, and the first red → green health-check test.
 
-## 4. CI (A0-07)
+## 4. CI (A0-07) — ⏭️ deferred
+
+> Deferred 2026-09-23: no workflow in the repo for now (see `03-implementation-plan.md` *Decision log*).
 
 `.github/workflows/ci.yml`: `MONGODB_URI` from a repo secret (Atlas, `MONGODB_DB=eld_ci`) → `astral-sh/setup-uv` → `uv sync` → ruff → pytest → drift checks
 (`requirements.txt` now; `openapi.yaml` and response fixtures from A5). See `04-testing-strategy.md` §7.
@@ -39,7 +41,7 @@ uv export --no-dev --no-hashes -o requirements.txt   # commit it; Render install
 1. **Atlas:** reuse the M0 cluster from A0-02 (`06-project-setup.md` §6). Copy its SRV URI.
 2. **Render → New → Web Service** → select the repo.
 3. Set the build/start commands, health check path and env vars from `02-architecture.md` §7 (`GEO_PROVIDER=fake` until A10).
-4. In the service settings, set **Auto-Deploy** to deploy only after CI checks pass.
+4. In the service settings, set **Auto-Deploy** to deploy only after CI checks pass (once CI is re-added; until then, on commit).
 5. `curl https://<api>.onrender.com/api/health/` → `{"status":"ok"}`. Tell the web repo the URL.
 
 Free-tier note: the service sleeps after 15 idle minutes, and the first request then takes about a minute to wake it. The web app is built to cope with this (AC-46).

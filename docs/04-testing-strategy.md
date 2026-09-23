@@ -92,6 +92,10 @@ The web repo syncs from these files (`npm run sync-contract`) and runs `api-cont
 
 ## 7. CI (`.github/workflows/ci.yml`)
 
+> ⏭️ **Deferred (2026-09-23).** The workflow was removed; this section is the plan for when it returns, with a
+> MongoDB service container instead of the Atlas secret (see `03-implementation-plan.md` *Decision log*).
+> Until then, run ruff, pytest and the §6 drift checks locally before each PR.
+
 ```
 jobs:
   test:

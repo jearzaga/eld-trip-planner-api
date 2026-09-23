@@ -14,7 +14,7 @@
 | API schema | **drf-spectacular** → committed `openapi.yaml` | Machine-readable contract the web repo generates TS types from |
 | Tests | pytest, pytest-django, Hypothesis, respx | TDD inner loop + property tests |
 | Hosting | **Render Web Service** (Python runtime, gunicorn), configured in the dashboard | Chosen platform; long-running process suits Django + Mongo connection pooling |
-| CI | GitHub Actions: ruff → pytest (Mongo service) → contract drift check | Render auto-deploys `main` after checks pass |
+| CI | GitHub Actions: ruff → pytest (Mongo service) → contract drift check | Render auto-deploys `main` after checks pass. ⏭️ Deferred for now (03 *Decision log*) |
 
 ## 2. System context
 
