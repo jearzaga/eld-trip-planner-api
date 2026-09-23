@@ -141,7 +141,7 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 |---|---|---|---|
 | A5-01 | Enable acceptance tests | `pytest tests/acceptance` → red | ⬜ |
 | A5-02 | Models: `Trip` + embedded `Location`, `LogMeta`, `Stop`, `DailyLog`, `DutySegment`, `Remark` | `tests/api/test_models.py` round-trip | ✅ |
-| A5-03 | Request serializer + validation | `test_trips_validation.py` | ⬜ |
+| A5-03 | Request serializer + validation | `test_trips_validation.py` | ✅ |
 | A5-04 | `services.plan_trip()` orchestration | `test_services.py` | ✅ |
 | A5-05 | `POST /api/trips/` → 201 per contract | `test_trips_create.py` | ⬜ |
 | A5-06 | `GET /api/trips/{id}/`, 404 shape | `test_trips_retrieve.py` | ⬜ |
