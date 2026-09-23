@@ -107,6 +107,7 @@ class _State:
     def resolve(self, hit: set[str]) -> None:  # A-12
         if "fuel" in hit:
             self.fuel_stop()
+            hit = hit - {"break"}  # a fuel stop is already >= 30 min non-driving (R-03)
         if "70" in hit:
             self.restart_34()
         elif "11" in hit or "14" in hit:
