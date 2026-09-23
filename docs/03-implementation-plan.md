@@ -39,7 +39,7 @@ _Updated 2026-09-23 after W1 merged (web PR #2) and the shared `hos/` foundation
 |---|---|---|---|---|
 | A0 | Repo & tooling foundation | 0.5 d | ✅ | Health endpoint green locally and on Render (CI deferred) |
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
-| A2 | HOS engine (pure Python) | 1 d | 🟨 | Goldens + property tests green; `hos/` ≥ 95 % |
+| A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
@@ -85,17 +85,17 @@ Outer loop: golden tests A2-11 / A2-13 (HTTP not available yet).
 |---|---|---|---|
 | A2-01 | `hos/models.py` dataclasses (`DutyStatus`, `Leg`, `TripInput`, `Segment`, `Stop`, `Timeline`); `hos/rules.py` constants with R-IDs | `test_models.py` | ✅ |
 | A2-02 | `ceil_q` / `floor_q` helpers | `test_time_utils.py` | ✅ |
-| A2-03 | Basic sequence pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip (SC-1) | `test_engine_basic.py` | ⬜ |
-| A2-04 | R-03 30-min break; non-driving ≥ 30 min resets (pickup/fuel count; 15 ON + 15 OFF counts; split 15s don't) | `test_engine_break.py` | ⬜ |
-| A2-05 | R-01 + R-05 11-h limit → 10-h SB reset; new shift after ≥ 10 h OFF/SB | `test_engine_11h.py` | ⬜ |
-| A2-06 | R-02 14-h window; breaks don't extend it; ON allowed after 14th hour | `test_engine_14h.py` (guide p.6: on at 06:00 → no driving after 20:00) | ⬜ |
-| A2-07 | R-06 + A-09 fuel ≤ 1,000 mi, 30 min ON, rounded down; counts as break | `test_engine_fuel.py` | ⬜ |
-| A2-08 | R-04 + A-05 70-h cycle; 34-h restart mid-trip (SC-3) and at start (SC-4) | `test_engine_cycle.py` | ⬜ |
-| A2-09 | A-12 tie-break | `test_engine_ties.py` | ⬜ |
-| A2-10 | Edge cases: zero-mile leg (SC-7), inspections off | `test_engine_edges.py` | ⬜ |
-| A2-11 | **Golden** SC-2 exact segments = business rules §8 | `test_engine_worked_example.py` | ⬜ |
-| A2-12 | **Property tests** (Hypothesis) — invariants from architecture §4.1 | `test_engine_invariants.py` | ⬜ |
-| A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ⬜ |
+| A2-03 | Basic sequence pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip (SC-1) | `test_engine_basic.py` | ✅ |
+| A2-04 | R-03 30-min break; non-driving ≥ 30 min resets (pickup/fuel count; 15 ON + 15 OFF counts; split 15s don't) | `test_engine_break.py` | ✅ |
+| A2-05 | R-01 + R-05 11-h limit → 10-h SB reset; new shift after ≥ 10 h OFF/SB | `test_engine_11h.py` | ✅ |
+| A2-06 | R-02 14-h window; breaks don't extend it; ON allowed after 14th hour | `test_engine_14h.py` (guide p.6: on at 06:00 → no driving after 20:00) | ✅ |
+| A2-07 | R-06 + A-09 fuel ≤ 1,000 mi, 30 min ON, rounded down; counts as break | `test_engine_fuel.py` | ✅ |
+| A2-08 | R-04 + A-05 70-h cycle; 34-h restart mid-trip (SC-3) and at start (SC-4) | `test_engine_cycle.py` | ✅ |
+| A2-09 | A-12 tie-break | `test_engine_ties.py` | ✅ |
+| A2-10 | Edge cases: zero-mile leg (SC-7), inspections off | `test_engine_edges.py` | ✅ |
+| A2-11 | **Golden** SC-2 exact segments = business rules §8 | `test_engine_worked_example.py` | ✅ |
+| A2-12 | **Property tests** (Hypothesis) — invariants from architecture §4.1 | `test_engine_invariants.py` | ✅ |
+| A2-13 | Stops carry `mile_marker`; SC-5 expectations | `test_engine_stops.py` | ✅ |
 | A2-14 | Purity guard | `test_purity.py` | ✅ |
 
 **Gate:** `pytest tests/unit/hos` green; `hos/` coverage ≥ 95 %.
