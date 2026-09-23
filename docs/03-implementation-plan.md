@@ -39,7 +39,7 @@ _Updated 2026-09-23 after W1 merged (web PR #2) and the shared `hos/` foundation
 |---|---|---|---|---|
 | A0 | Repo & tooling foundation | 0.5 d | ✅ | Health endpoint green locally and on Render (CI deferred) |
 | A1 | Acceptance tests (pytest, skipped) | 0.25 d | ✅ | All SC-1…SC-7 acceptance tests exist and are collected (skipped) |
-| A2 | HOS engine (pure Python) | 1 d | 🟨 | Goldens + property tests green; `hos/` ≥ 95 % |
+| A2 | HOS engine (pure Python) | 1 d | ✅ | Goldens + property tests green; `hos/` ≥ 95 % |
 | A3 | Log builder | 0.5 d | ⬜ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ⬜ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ⬜ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
