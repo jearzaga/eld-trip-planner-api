@@ -34,7 +34,7 @@ DJANGO_SETTINGS_MODULE = "config.settings"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-q --cov=hos --cov=geo --cov=trips --cov-report=term-missing"
-markers = ["live: hits real external APIs (never run in CI)"]
+markers = ["live: hits real external APIs (opt-in, never in the default run)"]
 
 [tool.coverage.run]
 omit = ["*/migrations/*", "config/*"]

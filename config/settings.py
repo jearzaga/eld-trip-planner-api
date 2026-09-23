@@ -42,7 +42,7 @@ ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
 
 # --- MongoDB Atlas (django-mongodb-backend >= 5.2.1 accepts a connection string in HOST) ---
-# There is no local MongoDB: every environment (dev, tests, E2E, CI, Render) uses an Atlas SRV URI.
+# There is no local MongoDB: every environment (dev, tests, E2E, Render) uses an Atlas SRV URI.
 DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",

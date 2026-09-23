@@ -14,7 +14,7 @@
 | API schema | **drf-spectacular** → committed `openapi.yaml` | Machine-readable contract the web repo generates TS types from |
 | Tests | pytest, pytest-django, Hypothesis, respx | TDD inner loop + property tests |
 | Hosting | **Render Web Service** (Python runtime, gunicorn), configured in the dashboard | Chosen platform; long-running process suits Django + Mongo connection pooling |
-| CI | GitHub Actions: ruff → pytest (Mongo service) → contract drift check | Render auto-deploys `main` after checks pass. ⏭️ Deferred for now (03 *Decision log*) |
+| Checks | Local only: ruff → pytest (incl. contract drift tests) before each PR | No CI pipelines by decision (03 *Decision log*); Render auto-deploys `main` on commit |
 
 ## 2. System context
 
@@ -220,7 +220,7 @@ and the off-duty padding after the trip ends carries `note: "Off duty"` at the t
 | `openapi.yaml` (committed) | `manage.py spectacular --file openapi.yaml` | `npm run gen:api-types` → `src/lib/api/schema.d.ts` (openapi-typescript) |
 | `tests/fixtures/responses/sc1…sc7.json` (committed) | `manage.py dump_scenarios` (fake provider, fixed start time) | `npm run sync-contract` → MSW handlers + Playwright expectations |
 
-CI fails if either artifact is stale (`git diff --exit-code` after regenerating). Contract changes are committed with
+`tests/contract/` fails locally if either artifact is stale; run it before each PR. Contract changes are committed with
 `contract:` in the message; breaking ones with `BREAKING:`.
 
 ## 6. Data model (MongoDB)
@@ -345,7 +345,7 @@ Render builds and deploys on every push to `main`.
 | Health check path | `/api/health/` |
 | Env vars | `PYTHON_VERSION=3.12.7`, `DJANGO_SECRET_KEY` (random), `DJANGO_DEBUG=0`, `ALLOWED_HOSTS=.onrender.com`, `GEO_PROVIDER=fake` (→ `live` in A10), `MONGODB_URI` (secret), `MONGODB_DB=eld`, `ORS_API_KEY` (A10), `CORS_ALLOWED_ORIGINS`, `CORS_ALLOWED_ORIGIN_REGEXES` (§8) |
 
-- `requirements.txt` is exported from `uv.lock` (`uv export --no-dev --no-hashes`); CI fails if it drifts.
+- `requirements.txt` is exported from `uv.lock` (`uv export --no-dev --no-hashes`); re-export and check `git diff` before each PR.
 - `gunicorn` is a runtime dependency. No static files (API only), so no WhiteNoise needed.
 - Mongo client is created once per process and reused.
 - Atlas **Network Access**: `0.0.0.0/0` (Render free instances have no static outbound IP) + a dedicated DB user.
@@ -372,7 +372,7 @@ workspace gets 750 free instance hours per month (enough for one service running
 | `DJANGO_DEBUG` | `1` locally, `0` on Render |
 | `ALLOWED_HOSTS` | `localhost,127.0.0.1` / `.onrender.com` |
 | `MONGODB_URI` | Atlas SRV URI, required in every environment (no local MongoDB) |
-| `MONGODB_DB` | `eld` on Render · `eld_dev` locally · `eld_e2e` for E2E · `eld_ci` in CI (pytest-django adds a `test_` prefix) |
+| `MONGODB_DB` | `eld` on Render · `eld_dev` locally · `eld_e2e` for E2E (pytest-django adds a `test_` prefix) |
 | `GEO_PROVIDER` | `fake` (default locally, tests, E2E) · `live` (Render) |
 | `ORS_API_KEY` | — |
 | `PHOTON_URL` | `https://photon.komoot.io` |
@@ -383,7 +383,7 @@ workspace gets 750 free instance hours per month (enough for one service running
 
 | Risk | Mitigation |
 |---|---|
-| Contract drift between repos | Committed `openapi.yaml` + response fixtures; CI staleness check; web `api-contract.spec.ts`; `contract:` commit tag |
+| Contract drift between repos | Committed `openapi.yaml` + response fixtures; local `tests/contract` staleness check; web `api-contract.spec.ts`; `contract:` commit tag |
 | Render cold start (~1 min) | §7.1 |
 | Free API rate limits | Mongo caches with TTL; fake provider in all tests; debounce autocomplete in web |
 | Many reverse-geocodes on long trips | Batch + cache; fallback "near <nearest place>" |

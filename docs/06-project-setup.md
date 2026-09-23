@@ -10,7 +10,7 @@ repo root unless stated otherwise. Commands are shown for **macOS/Linux**; Windo
 | Python | 3.12 | Supported by Django 5.2 and all libraries below |
 | Django | **5.2 LTS** (`~=5.2.0`) | Supported until April 2028; matches the `django-mongodb-backend` 5.2.x series |
 | django-mongodb-backend | **`>=5.2.1,<5.3`** | 5.2.1 added connection strings in `HOST`, and the version must match Django's |
-| MongoDB | **Atlas M0 (free tier)** in every environment | No local MongoDB or Docker; dev, tests, E2E, CI and Render all connect to Atlas |
+| MongoDB | **Atlas M0 (free tier)** in every environment | No local MongoDB or Docker; dev, tests, E2E and Render all connect to Atlas |
 
 > Newer Django releases exist (6.x) with matching `django-mongodb-backend` 6.x. We stay on the **5.2 LTS** line for
 > stability during the assessment. Whichever line you pick, **the backend's major.minor must match Django's**.
@@ -238,7 +238,7 @@ ROOT_URLCONF = "config.urls"
 WSGI_APPLICATION = "config.wsgi.application"
 
 # --- MongoDB Atlas (django-mongodb-backend >= 5.2.1 accepts a connection string in HOST) ---
-# There is no local MongoDB: every environment (dev, tests, E2E, CI, Render) uses an Atlas SRV URI.
+# There is no local MongoDB: every environment (dev, tests, E2E, Render) uses an Atlas SRV URI.
 DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
@@ -316,7 +316,7 @@ gets its own database name through `MONGODB_DB`.
 1. In [Atlas](https://cloud.mongodb.com), create a free **M0** cluster on AWS `us-east-1` (same region as Render `virginia`).
 2. **Database Access:** add a database user with *Read and write to any database* (pytest-django creates and drops
    `test_<MONGODB_DB>` databases).
-3. **Network Access:** add `0.0.0.0/0`. Render free instances and GitHub Actions runners have no static outbound IP.
+3. **Network Access:** add `0.0.0.0/0`. Render free instances have no static outbound IP.
 4. **Connect → Drivers:** copy the SRV string (`mongodb+srv://…`), fill in the password, and paste it into
    `MONGODB_URI` in `.env`. URL-encode special characters in the password.
 5. Check the connection:
@@ -332,7 +332,6 @@ uv run python manage.py shell -c "from django.db import connection; print(connec
 |---|---|---|
 | Local dev | `eld_dev` | `test_eld_dev` |
 | E2E (Playwright boots the API) | `eld_e2e` | — |
-| CI (GitHub Actions) | `eld_ci` | `test_eld_ci` (separate, so CI can't clash with a local test run) |
 | Render (production) | `eld` (set in the Render dashboard) | — |
 
 > M0 limits: 512 MB storage, 500 collections, 100 databases, shared CPU. That's plenty for this project.
@@ -349,7 +348,7 @@ DJANGO_SETTINGS_MODULE = "config.settings"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-q --cov=hos --cov=geo --cov=trips --cov-report=term-missing"
-markers = ["live: hits real external APIs (never run in CI)"]
+markers = ["live: hits real external APIs (opt-in, never in the default run)"]
 
 [tool.coverage.run]
 omit = ["*/migrations/*", "config/*"]
@@ -451,30 +450,8 @@ htmlcov/
 .hypothesis/
 ```
 
-> ⏭️ CI is deferred (2026-09-23) and this file is not in the repo; see `03-implementation-plan.md` *Decision log*.
-
-**`.github/workflows/ci.yml`** (minimal; extended in A5 with contract drift checks). Add the Atlas URI as a repository
-secret first: GitHub → *Settings → Secrets and variables → Actions* → `MONGODB_URI`.
-
-```yaml
-name: ci
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    env:
-      MONGODB_URI: ${{ secrets.MONGODB_URI }}   # repo secret: the Atlas SRV URI
-      MONGODB_DB: eld_ci
-      GEO_PROVIDER: fake
-      DJANGO_DEBUG: "1"
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - run: uv sync --frozen
-      - run: uv run ruff check . && uv run ruff format --check .
-      - run: uv run pytest
-      - run: uv export --no-dev --no-hashes -o requirements.txt && git diff --exit-code requirements.txt
-```
+> There are no CI pipelines by decision (2026-09-24); run ruff, `uv run pytest` and the `requirements.txt` drift
+> check locally before each PR (see `03-implementation-plan.md` *Decision log*).
 
 ---
 

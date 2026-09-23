@@ -84,28 +84,12 @@ A2–A4 (pure engine / builder / geo) use the **golden unit tests** as their out
 
 | Check | How |
 |---|---|
-| OpenAPI up to date | CI: `manage.py spectacular --file openapi.yaml && git diff --exit-code openapi.yaml` |
-| Response fixtures up to date | CI: `manage.py dump_scenarios && git diff --exit-code tests/fixtures/responses/` |
-| Deps exported for Render | CI: `uv export --no-dev --no-hashes -o requirements.txt && git diff --exit-code requirements.txt` |
+| OpenAPI up to date | `tests/contract/test_openapi_fresh.py` (regenerate: `manage.py spectacular --file openapi.yaml`) |
+| Response fixtures up to date | `tests/contract/test_fixtures_fresh.py` (regenerate: `manage.py dump_scenarios`) |
+| Deps exported for Render | `uv export --no-dev --no-hashes -o requirements.txt && git diff --exit-code requirements.txt` |
+
+There are no CI pipelines (decision 2026-09-24, `03-implementation-plan.md` *Decision log*). Run the drift checks
+locally before each PR: `uv run pytest tests/contract` (the full `uv run pytest` includes them), plus ruff and the
+`requirements.txt` export above.
 
 The web repo syncs from these files (`npm run sync-contract`) and runs `api-contract.spec.ts` (Playwright, consumer side).
-
-## 7. CI (`.github/workflows/ci.yml`)
-
-> ⏭️ **Deferred (2026-09-23).** The workflow was removed; this section is the plan for when it returns, with a
-> MongoDB service container instead of the Atlas secret (see `03-implementation-plan.md` *Decision log*).
-> Until then, run ruff, pytest and the §6 drift checks locally before each PR.
-
-```
-jobs:
-  test:
-    env: MONGODB_URI from the repo secret (Atlas), MONGODB_DB=eld_ci. No Mongo service container.
-    steps: checkout → setup uv + Python 3.12 → uv sync
-           → ruff check + ruff format --check
-           → pytest (unit, api, acceptance, contract) with coverage gates (hos ≥ 95 %, total ≥ 85 %)
-           → drift checks (§6)
-  notify-web (optional, on push to main):
-    → repository_dispatch "api-updated" to eld-trip-planner-web (needs a PAT secret) so its E2E runs against the new API
-```
-
-Render auto-deploys `main` only after these checks pass.
