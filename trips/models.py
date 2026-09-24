@@ -93,6 +93,7 @@ class StopRecord(EmbeddedModel):
     arrive_at = models.DateTimeField()
     depart_at = models.DateTimeField()
     status = models.CharField(max_length=8)
+    reason = models.CharField(max_length=255, null=True, blank=True)  # noqa: DJ001
 
     def to_dict(self, tz: str) -> dict:
         duration_min = round((self.depart_at - self.arrive_at).total_seconds() / 60)
@@ -107,6 +108,7 @@ class StopRecord(EmbeddedModel):
             "depart_at": _iso(self.depart_at, tz),
             "duration_min": duration_min,
             "status": self.status,
+            "reason": self.reason,
         }
 
 
@@ -208,6 +210,7 @@ class Trip(models.Model):
                 arrive_at=_to_utc(data["arrive_at"]),
                 depart_at=_to_utc(data["depart_at"]),
                 status=data["status"],
+                reason=data.get("reason"),
             )
 
         def daily_log(data: dict) -> DailyLog:

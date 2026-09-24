@@ -456,6 +456,9 @@ components:
           type: integer
         status:
           $ref: '#/components/schemas/DutyStatusEnum'
+        reason:
+          type: string
+          nullable: true
       required:
       - arrive_at
       - depart_at
@@ -464,6 +467,7 @@ components:
       - lat
       - lng
       - mile_marker
+      - reason
       - seq
       - status
       - type

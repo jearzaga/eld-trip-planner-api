@@ -54,6 +54,7 @@ def _second_scenario() -> dict:
             "depart_at": "2026-09-24T17:15:00-07:00",
             "duration_min": 600,
             "status": "SB",
+            "reason": "11-hour driving limit reached",
         },
         {
             "seq": 2,
@@ -66,6 +67,7 @@ def _second_scenario() -> dict:
             "depart_at": "2026-09-26T18:00:00-07:00",
             "duration_min": 2040,
             "status": "SB",
+            "reason": "70-hour / 8-day limit reached",
         },
         {
             "seq": 3,
@@ -78,6 +80,7 @@ def _second_scenario() -> dict:
             "depart_at": "2026-09-26T23:15:00-07:00",
             "duration_min": 60,
             "status": "ON",
+            "reason": "1 hour on duty to unload",
         },
     ]
     plan["summary"]["stop_count"] = 3
@@ -120,3 +123,17 @@ def test_round_trip_preserves_restart_and_second_day_with_a_non_eastern_timezone
     expected = copy.deepcopy(plan)
     expected["id"] = str(trip.pk)
     assert response == expected
+
+
+@pytest.mark.django_db
+def test_trip_saved_before_stop_reasons_existed_reads_a_null_reason():
+    plan = _load_example()
+    del plan["id"]
+    for stop in plan["stops"]:
+        del stop["reason"]
+
+    trip = Trip.from_plan(plan)
+    trip.save()
+
+    stops = Trip.objects.get(pk=trip.pk).to_response()["stops"]
+    assert [stop["reason"] for stop in stops] == [None, None]

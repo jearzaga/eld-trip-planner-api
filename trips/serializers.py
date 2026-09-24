@@ -100,6 +100,7 @@ class StopSerializer(serializers.Serializer):
     depart_at = serializers.CharField()
     duration_min = serializers.IntegerField()
     status = serializers.ChoiceField(choices=["OFF", "SB", "D", "ON"])
+    reason = serializers.CharField(allow_null=True)
 
 
 class LogHeaderSerializer(serializers.Serializer):

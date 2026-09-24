@@ -56,6 +56,7 @@ class Stop:
     start_min: int
     end_min: int
     mile_marker: float
+    reason: str
 
     @property
     def duration_min(self) -> int:

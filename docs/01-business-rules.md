@@ -167,6 +167,15 @@ Repeat until the leg is fully driven:
 2. **Drive** that long (if > 0).
 3. Whichever limit was hit decides the stop: leg end → next activity · fuel → fuel stop · 8-h → 30-min break ·
    11/14 → 10-h reset · 70 → 34-h restart. Apply the A-12 tie-break.
+4. **Record why.** Every stop carries a plain-English `reason` for the limit or activity that caused it:
+
+| Stop | Reason |
+|---|---|
+| pickup / dropoff | `1 hour on duty to load` / `1 hour on duty to unload` |
+| fuel | `Fuel needed every 1,000 miles` |
+| 30-min break | `8 hours of driving since the last break` |
+| 10-h reset | `11-hour driving limit reached` (R-01), or `14-hour duty window closed` (R-02); R-01 wins when both hit |
+| 34-h restart | `70-hour / 8-day limit reached`, or `Cycle already at 70 hours at trip start` (A-05) |
 
 Trip order: *(34-h restart if cycle full)* → pre-trip → leg 1 → pickup → leg 2 → dropoff → post-trip.
 Then split the timeline at each home-terminal midnight into daily logs, pad with OFF, compute totals and recap.

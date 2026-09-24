@@ -88,7 +88,8 @@
       "arrive_at": "2026-09-24T07:15:00-04:00",
       "depart_at": "2026-09-24T08:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to load"
     },
     {
       "seq": 2,
@@ -100,7 +101,8 @@
       "arrive_at": "2026-09-24T11:15:00-04:00",
       "depart_at": "2026-09-24T12:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to unload"
     }
   ],
   "daily_logs": [

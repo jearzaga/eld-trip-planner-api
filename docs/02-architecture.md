@@ -184,7 +184,8 @@ scenarios, `id` fixed to a deterministic ObjectId).
   },
   "stops": [
     { "seq": 1, "type": "pickup", "label": "Baltimore, MD", "lat": 39.29, "lng": -76.61,
-      "mile_marker": 120.0, "arrive_at": "…", "depart_at": "…", "duration_min": 60, "status": "ON" }
+      "mile_marker": 120.0, "arrive_at": "…", "depart_at": "…", "duration_min": 60, "status": "ON",
+      "reason": "1 hour on duty to load" }
   ],
   "daily_logs": [
     {
@@ -208,7 +209,8 @@ scenarios, `id` fixed to a deterministic ObjectId).
 ```
 
 `stop.type` ∈ `pickup | fuel | break_30 | rest_10 | restart_34 | dropoff`. Pre/post-trip inspections are not map stops;
-they appear only in the log segments and remarks. `summary.stop_count == len(stops)`. Every `segments[]` entry always
+they appear only in the log segments and remarks. Every stop carries `reason`, the rule that caused it
+(business rules §7). `summary.stop_count == len(stops)`. Every `segments[]` entry always
 carries `note` and `location`, nullable; every `remarks[]` entry's `location`/`note` are also nullable.
 Every duty-status change gets a remark with a location and a reason (R-09): driving segments carry `note: "Driving"`,
 and the off-duty padding after the trip ends carries `note: "Off duty"` at the trip's last location.

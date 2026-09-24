@@ -40,7 +40,14 @@ def test_segment_duration_and_immutability():
 def test_timeline_and_trip_input_defaults():
     trip = TripInput(legs=(Leg(60, 60), Leg(180, 180)), cycle_used_min=0)
     assert trip.include_inspections is True
-    pickup = Stop(StopType.PICKUP, DutyStatus.ON, start_min=75, end_min=135, mile_marker=60)
+    pickup = Stop(
+        StopType.PICKUP,
+        DutyStatus.ON,
+        start_min=75,
+        end_min=135,
+        mile_marker=60,
+        reason="1 hour on duty to load",
+    )
     assert Timeline(segments=(), stops=(pickup,)).stops[0].duration_min == 60
 
 
