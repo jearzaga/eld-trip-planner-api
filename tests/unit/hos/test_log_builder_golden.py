@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from hos.log_builder import build_daily_logs
+from hos.log_builder import Remark, build_daily_logs
 from hos.models import DutyStatus, Segment, Timeline
 
 JOHN_DOE_SEGMENTS = (
@@ -56,4 +56,5 @@ def test_john_doe_example_log_matches_totals_and_remarks():
     (daily_log,) = build_daily_logs(timeline, start_utc=start_utc, home_tz="America/New_York")
 
     assert daily_log.totals == {"OFF": 10.0, "SB": 1.75, "D": 7.75, "ON": 4.5}
-    assert len(daily_log.remarks) == 6
+    assert len(daily_log.remarks) == 7
+    assert daily_log.remarks[-1] == Remark(at_min=1260, location="Newark, NJ", note="Off duty")

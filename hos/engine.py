@@ -47,7 +47,9 @@ class _State:
 
     def drive(self, minutes: int, leg: Leg) -> int:
         self.start_shift_if_needed()
-        self.segments.append(Segment(DutyStatus.D, self.t, self.t + minutes, self.total_miles))
+        self.segments.append(
+            Segment(DutyStatus.D, self.t, self.t + minutes, self.total_miles, "Driving")  # R-09
+        )
         miles = minutes / 60 * leg.mph
         self.t += minutes
         self.total_miles += miles
@@ -107,7 +109,7 @@ class _State:
     def resolve(self, hit: set[str]) -> None:  # A-12
         if "fuel" in hit:
             self.fuel_stop()
-            hit = hit - {"break"}  # a fuel stop is already >= 30 min non-driving (R-03)
+            hit = hit - {"break"}  # R-03
         if "70" in hit:
             self.restart_34()
         elif "11" in hit or "14" in hit:

@@ -141,7 +141,7 @@
           "status": "D",
           "start_min": 375,
           "end_min": 435,
-          "note": null,
+          "note": "Driving",
           "location": "Richmond, VA"
         },
         {
@@ -155,7 +155,7 @@
           "status": "D",
           "start_min": 495,
           "end_min": 675,
-          "note": null,
+          "note": "Driving",
           "location": "Fredericksburg, VA"
         },
         {
@@ -176,8 +176,8 @@
           "status": "OFF",
           "start_min": 750,
           "end_min": 1440,
-          "note": null,
-          "location": null
+          "note": "Off duty",
+          "location": "Philadelphia, PA"
         }
       ],
       "totals": {
@@ -195,7 +195,7 @@
         {
           "at_min": 375,
           "location": "Richmond, VA",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 435,
@@ -205,7 +205,7 @@
         {
           "at_min": 495,
           "location": "Fredericksburg, VA",
-          "note": null
+          "note": "Driving"
         },
         {
           "at_min": 675,
@@ -216,6 +216,11 @@
           "at_min": 735,
           "location": "Philadelphia, PA",
           "note": "Post-trip inspection"
+        },
+        {
+          "at_min": 750,
+          "location": "Philadelphia, PA",
+          "note": "Off duty"
         }
       ],
       "recap": {

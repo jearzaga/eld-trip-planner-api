@@ -79,8 +79,7 @@ eld-trip-planner-api/
 │  ├─ api/                     # pytest-django + Atlas test DB (test_<MONGODB_DB>)
 │  ├─ acceptance/              # SC-1…SC-7 over HTTP (outer loop for this repo)
 │  └─ fixtures/responses/      # generated contract fixtures (sc1.json … sc7.json) consumed by the web repo
-├─ docs/
-└─ .github/workflows/ci.yml   # ⏭️ deferred, not in the repo yet
+└─ docs/
 ```
 
 ## Commands

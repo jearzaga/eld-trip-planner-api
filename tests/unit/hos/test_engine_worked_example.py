@@ -10,15 +10,15 @@ TWO_DAY_WORKED_EXAMPLE_TRIP = TripInput(
 # (status, start_min, end_min, note) — minutes from trip start (t=0 == 06:00)
 EXPECTED_SEGMENTS = [
     (DutyStatus.ON, 0, 15, "Pre-trip inspection"),
-    (DutyStatus.D, 15, 135, None),
+    (DutyStatus.D, 15, 135, "Driving"),
     (DutyStatus.ON, 135, 195, "Pickup"),
-    (DutyStatus.D, 195, 675, None),
+    (DutyStatus.D, 195, 675, "Driving"),
     (DutyStatus.OFF, 675, 705, "30-minute break"),
-    (DutyStatus.D, 705, 765, None),
+    (DutyStatus.D, 705, 765, "Driving"),
     (DutyStatus.SB, 765, 1365, "10-hour reset"),
-    (DutyStatus.D, 1365, 1695, None),
+    (DutyStatus.D, 1365, 1695, "Driving"),
     (DutyStatus.ON, 1695, 1725, "Fuel"),
-    (DutyStatus.D, 1725, 1935, None),
+    (DutyStatus.D, 1725, 1935, "Driving"),
     (DutyStatus.ON, 1935, 1995, "Dropoff"),
     (DutyStatus.ON, 1995, 2010, "Post-trip inspection"),
 ]

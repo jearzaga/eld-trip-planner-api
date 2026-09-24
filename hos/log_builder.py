@@ -149,8 +149,8 @@ def _raw_pieces(timeline: Timeline, start_utc: datetime, tz: ZoneInfo) -> list[_
                 end_dt=day_after_end,
                 mile_start=last_mile,
                 mile_end=last_mile,
-                note=None,
-                location=None,
+                note="Off duty",  # R-09
+                location=segments[-1].location if segments else None,
                 is_continuation=False,
             )
         )
@@ -239,7 +239,7 @@ def _recap_for_day(
         on_duty_today=round(on_duty_today_min / 60, 2),
         a_last_7=a_last_7,
         b_available_tomorrow=b_available_tomorrow,
-        c_last_5=a_last_7,  # A-14: no rolling window, so C matches A
+        c_last_5=a_last_7,  # A-14
         restart_34_taken=restart_today,
     )
 
