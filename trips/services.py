@@ -138,6 +138,7 @@ def plan_trip(
                 "depart_at": local_dt(stop.end_min).isoformat(),
                 "duration_min": stop.duration_min,
                 "status": stop.status.value,
+                "reason": stop.reason,
             }
         )
 

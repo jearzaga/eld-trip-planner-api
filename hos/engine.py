@@ -61,13 +61,15 @@ class _State:
         self.off_streak = 0
         return minutes
 
-    def on(self, minutes: int, note: str, stop_type: StopType | None = None) -> None:
+    def on(
+        self, minutes: int, note: str, stop_type: StopType | None = None, reason: str = ""
+    ) -> None:
         self.start_shift_if_needed()  # R-02
         start = self.t
         end = start + minutes
         self.segments.append(Segment(DutyStatus.ON, start, end, self.total_miles, note))
         if stop_type is not None:
-            self.stops.append(Stop(stop_type, DutyStatus.ON, start, end, self.total_miles))
+            self.stops.append(Stop(stop_type, DutyStatus.ON, start, end, self.total_miles, reason))
         self.t += minutes
         self.cycle_used += minutes  # R-04
         self.non_driving_streak += minutes
@@ -76,12 +78,19 @@ class _State:
         self.off_streak = 0
 
     def off(
-        self, minutes: int, status: DutyStatus, note: str, stop_type: StopType | None = None
+        self,
+        minutes: int,
+        status: DutyStatus,
+        note: str,
+        stop_type: StopType | None = None,
+        reason: str = "",
     ) -> None:
         start = self.t
         self.segments.append(Segment(status, start, start + minutes, self.total_miles, note))
         if stop_type is not None:
-            self.stops.append(Stop(stop_type, status, start, start + minutes, self.total_miles))
+            self.stops.append(
+                Stop(stop_type, status, start, start + minutes, self.total_miles, reason)
+            )
         self.t += minutes
         self.non_driving_streak += minutes
         if self.non_driving_streak >= BREAK_MIN:  # R-03
@@ -94,26 +103,36 @@ class _State:
             self.cycle_used = 0
 
     def fuel_stop(self) -> None:
-        self.on(FUEL_MIN, "Fuel", StopType.FUEL)  # R-06
+        self.on(FUEL_MIN, "Fuel", StopType.FUEL, "Fuel needed every 1,000 miles")
         self.miles_since_fuel = 0.0
 
     def break_30(self) -> None:
-        self.off(BREAK_MIN, DutyStatus.OFF, "30-minute break", StopType.BREAK_30)  # R-03, A-07
+        self.off(  # A-07
+            BREAK_MIN,
+            DutyStatus.OFF,
+            "30-minute break",
+            StopType.BREAK_30,
+            "8 hours of driving since the last break",
+        )
 
-    def reset_10(self) -> None:
-        self.off(RESET_MIN, DutyStatus.SB, "10-hour reset", StopType.REST_10)  # R-05, A-07
+    def reset_10(self, reason: str) -> None:
+        self.off(RESET_MIN, DutyStatus.SB, "10-hour reset", StopType.REST_10, reason)  # R-05, A-07
 
-    def restart_34(self) -> None:
-        self.off(RESTART_MIN, DutyStatus.OFF, "34-hour restart", StopType.RESTART_34)  # R-04, A-07
+    def restart_34(self, reason: str) -> None:
+        self.off(  # A-07
+            RESTART_MIN, DutyStatus.OFF, "34-hour restart", StopType.RESTART_34, reason
+        )
 
     def resolve(self, hit: set[str]) -> None:  # A-12
         if "fuel" in hit:
             self.fuel_stop()
             hit = hit - {"break"}  # R-03
         if "70" in hit:
-            self.restart_34()
-        elif "11" in hit or "14" in hit:
-            self.reset_10()
+            self.restart_34("70-hour / 8-day limit reached")
+        elif "11" in hit:
+            self.reset_10("11-hour driving limit reached")
+        elif "14" in hit:
+            self.reset_10("14-hour duty window closed")
         elif "break" in hit:
             self.break_30()
 
@@ -148,13 +167,13 @@ def _drive_leg(s: _State, leg: Leg) -> None:
 def plan_timeline(trip: TripInput) -> Timeline:
     s = _State(cycle_used=trip.cycle_used_min)
     if s.cycle_used >= CYCLE_LIMIT_MIN:  # A-05
-        s.restart_34()
+        s.restart_34("Cycle already at 70 hours at trip start")
     if trip.include_inspections:
         s.on(INSPECTION_MIN, "Pre-trip inspection")  # A-06
     _drive_leg(s, trip.legs[0])
-    s.on(PICKUP_MIN, "Pickup", StopType.PICKUP)  # R-07
+    s.on(PICKUP_MIN, "Pickup", StopType.PICKUP, "1 hour on duty to load")
     _drive_leg(s, trip.legs[1])
-    s.on(DROPOFF_MIN, "Dropoff", StopType.DROPOFF)  # R-07
+    s.on(DROPOFF_MIN, "Dropoff", StopType.DROPOFF, "1 hour on duty to unload")
     if trip.include_inspections:
         s.on(INSPECTION_MIN, "Post-trip inspection")  # A-06
     return s.timeline

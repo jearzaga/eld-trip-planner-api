@@ -36,7 +36,8 @@ _Updated 2026-09-24: A5 done (web synced), no CI by decision._
 6. **A0 ✅.** Render service configured in the dashboard, health endpoint live at
    `https://eld-trip-planner-api-ozav.onrender.com/api/health/`. **A0-07 CI is ⏭️ dropped** (no CI by decision, see *Decision log*):
    run the checks locally before each PR.
-7. **A10, A11** at the end (production deploy, README / Loom).
+7. **A12** stop reasons ("why this stop?"), then web W12.
+8. **A10, A11** at the end (production deploy, README / Loom).
 
 ## Progress overview (API)
 
@@ -48,6 +49,7 @@ _Updated 2026-09-24: A5 done (web synced), no CI by decision._
 | A3 | Log builder | 0.5 d | ✅ | John Doe golden + SC-1…SC-5 logs total 24 |
 | A4 | Geo services | 0.5 d | ✅ | Adapters tested with recorded fixtures; fake serves all scenarios |
 | A5 | API, persistence, contract | 0.75 d | ✅ | Acceptance tests green; web `api-contract.spec.ts` green; artifacts published |
+| A12 | Stop reasons ("why this stop?") | 0.25 d | ✅ | Every stop carries the rule that caused it; web W12 synced |
 | A10 | Production deploy (Render) | 0.25 d | ⬜ | Live provider works on Render; web `@smoke` green |
 | A11 | Deliverables (API) | 0.25 d | ⬜ | README final |
 
@@ -155,6 +157,19 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 
 **Gate:** backend suite green, coverage ≥ 85 %; acceptance green; web `api-contract.spec.ts` green.
 
+## A12 — Stop reasons ("why this stop?")
+
+Each stop names the rule that caused it (business rules §7, AC-14). The engine already knows which limit it hit, and
+`rest_10` alone can't tell R-01 from R-02, so the reason comes from the API.
+
+| ID | Task | Test first | Status |
+|---|---|---|---|
+| A12-01 | Engine: `Stop.reason` from the limit hit (incl. R-01 vs R-02 rests, A-05 restart) | `tests/unit/hos/test_engine_stop_reasons.py` | ✅ |
+| A12-02 | Persist and serve `reason` (`StopRecord` + migration, `StopSerializer`, `services.plan_trip`); older trips read `null` | `tests/unit/trips/test_services.py`, `tests/api/test_models.py` | ✅ |
+| A12-03 | Regenerate `openapi.yaml` + `sc*.json` fixtures (`contract:` commit) | `tests/contract` drift tests | ✅ |
+
+**Gate:** backend suite + acceptance green; web W12 synced.
+
 ## A10 — Production deploy (Render)
 
 | ID | Task | Test first | Status |
@@ -184,6 +199,7 @@ Outer loop: remove `skip` from `tests/acceptance/` → red. Web repo: enable `e2
 | 2026-09-23 | **Engine ↔ log builder contract.** `Segment` carries `mile_marker` (miles at segment start) and an optional `location`; `trips/services.py` fills `location` from reverse geocoding before the log builder writes remarks. `build_daily_logs(timeline, *, start_utc, home_tz, cycle_used_min, meta)` takes the engine's `Timeline`, so A2 and A3 can be built in parallel | 02 §4 |
 | 2026-09-23 | **CI deferred (A0-07, and web W0-05/W1-07).** Removed `.github/workflows/ci.yml` from both repos. Every run would connect to the shared Atlas cluster, and CI adds little while one person builds the foundation. Until it returns, run the checks locally before each PR (`CLAUDE.md` definition of done). When re-added, use a throwaway MongoDB service container (`mongo:8`, `MONGODB_URI=mongodb://localhost:27017`) instead of an Atlas secret, then switch Render Auto-Deploy to *After CI checks pass* (superseded 2026-09-24) | 04 §6 |
 | 2026-09-24 | **Remark reason at every duty-status change.** Driving segments carry the note `Driving`; the off-duty padding after the trip carries `Off duty` at the last location, so every change (including the final ON→OFF) has a "City, ST" remark with a reason. Contract fixtures regenerated | R-09, AC-25 |
+| 2026-09-24 | **Stop reasons.** Every stop carries `reason`, the rule that caused it (R-01 vs R-02 for 10-h rests, A-05 for a restart at trip start). `StopRecord.reason` is nullable so trips saved earlier still load; migration `0002_stop_reason`. Contract fixtures regenerated | AC-14, 01 §7 |
 | 2026-09-24 | **No CI pipelines in either repo.** A0-07 (and web W0-05/W1-07) dropped. Every PR runs the checks locally: ruff, `uv run pytest` (incl. `tests/contract` drift tests) and the `requirements.txt` export; Render auto-deploys `main` on commit | 04 §6 |
 
 ## Blockers / open questions

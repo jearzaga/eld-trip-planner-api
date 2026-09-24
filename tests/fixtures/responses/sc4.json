@@ -88,7 +88,8 @@
       "arrive_at": "2026-09-24T06:00:00-04:00",
       "depart_at": "2026-09-25T16:00:00-04:00",
       "duration_min": 2040,
-      "status": "OFF"
+      "status": "OFF",
+      "reason": "Cycle already at 70 hours at trip start"
     },
     {
       "seq": 2,
@@ -100,7 +101,8 @@
       "arrive_at": "2026-09-25T17:15:00-04:00",
       "depart_at": "2026-09-25T18:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to load"
     },
     {
       "seq": 3,
@@ -112,7 +114,8 @@
       "arrive_at": "2026-09-25T21:15:00-04:00",
       "depart_at": "2026-09-25T22:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to unload"
     }
   ],
   "daily_logs": [

@@ -88,7 +88,8 @@
       "arrive_at": "2026-09-24T11:15:00-04:00",
       "depart_at": "2026-09-24T12:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to load"
     },
     {
       "seq": 2,
@@ -100,7 +101,8 @@
       "arrive_at": "2026-09-24T18:15:00-04:00",
       "depart_at": "2026-09-25T04:15:00-04:00",
       "duration_min": 600,
-      "status": "SB"
+      "status": "SB",
+      "reason": "11-hour driving limit reached"
     },
     {
       "seq": 3,
@@ -112,7 +114,8 @@
       "arrive_at": "2026-09-25T10:00:00-04:00",
       "depart_at": "2026-09-25T10:30:00-04:00",
       "duration_min": 30,
-      "status": "ON"
+      "status": "ON",
+      "reason": "Fuel needed every 1,000 miles"
     },
     {
       "seq": 4,
@@ -124,7 +127,8 @@
       "arrive_at": "2026-09-25T15:45:00-04:00",
       "depart_at": "2026-09-26T01:45:00-04:00",
       "duration_min": 600,
-      "status": "SB"
+      "status": "SB",
+      "reason": "11-hour driving limit reached"
     },
     {
       "seq": 5,
@@ -136,7 +140,8 @@
       "arrive_at": "2026-09-26T09:45:00-04:00",
       "depart_at": "2026-09-26T10:15:00-04:00",
       "duration_min": 30,
-      "status": "OFF"
+      "status": "OFF",
+      "reason": "8 hours of driving since the last break"
     },
     {
       "seq": 6,
@@ -148,7 +153,8 @@
       "arrive_at": "2026-09-26T13:15:00-04:00",
       "depart_at": "2026-09-26T23:15:00-04:00",
       "duration_min": 600,
-      "status": "SB"
+      "status": "SB",
+      "reason": "11-hour driving limit reached"
     },
     {
       "seq": 7,
@@ -160,7 +166,8 @@
       "arrive_at": "2026-09-26T23:45:00-04:00",
       "depart_at": "2026-09-27T00:15:00-04:00",
       "duration_min": 30,
-      "status": "ON"
+      "status": "ON",
+      "reason": "Fuel needed every 1,000 miles"
     },
     {
       "seq": 8,
@@ -172,7 +179,8 @@
       "arrive_at": "2026-09-27T08:15:00-04:00",
       "depart_at": "2026-09-27T08:45:00-04:00",
       "duration_min": 30,
-      "status": "OFF"
+      "status": "OFF",
+      "reason": "8 hours of driving since the last break"
     },
     {
       "seq": 9,
@@ -184,7 +192,8 @@
       "arrive_at": "2026-09-27T11:15:00-04:00",
       "depart_at": "2026-09-27T21:15:00-04:00",
       "duration_min": 600,
-      "status": "SB"
+      "status": "SB",
+      "reason": "11-hour driving limit reached"
     },
     {
       "seq": 10,
@@ -196,7 +205,8 @@
       "arrive_at": "2026-09-28T00:15:00-04:00",
       "depart_at": "2026-09-28T01:15:00-04:00",
       "duration_min": 60,
-      "status": "ON"
+      "status": "ON",
+      "reason": "1 hour on duty to unload"
     }
   ],
   "daily_logs": [
